@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyCoin | Official Website</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #splash h1 {
+            font-size: 48px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById("splash").style.display = "none";
+            }, 2000);
+        });
+    </script>
+</head>
+<body style="font-family:Arial,sans-serif;margin:0;padding:0;background-color:#f4f4f4;color:#333;">
+    <div id="splash">
+        <h1>Welcome to OnlyCoin</h1>
+        <p>Loading the future of memecoins...</p>
+    </div>
+    <header style="background-color:#222;padding:20px;text-align:center;color:white;">
+        <img src="logo.png" alt="OnlyCoin Logo" style="max-height:100px;margin-bottom:10px;">
+        <h1>OnlyCoin ($ONLY)</h1>
+        <p>The decentralized meme token on Binance Smart Chain</p>
+        <nav>
+            <a href="#about" style="color:white;margin:0 15px;">About</a>
+            <a href="#tokenomics" style="color:white;margin:0 15px;">Tokenomics</a>
+            <a href="#team" style="color:white;margin:0 15px;">Team</a>
+            <a href="#roadmap" style="color:white;margin:0 15px;">Roadmap</a>
+            <a href="#audit" style="color:white;margin:0 15px;">Audit</a>
+            <a href="#social" style="color:white;margin:0 15px;">Social</a>
+        </nav>
+    </header>
+    <!-- Remaining site content continues here as in canvas -->
+</body>
+</html>
