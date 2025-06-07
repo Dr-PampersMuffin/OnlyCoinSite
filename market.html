@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Market - OnlyCoin</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4fb;
+      color: #1c1e21;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1da1f2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    table {
+      width: 90%;
+      margin: 40px auto;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+    }
+    th {
+      background-color: #1da1f2;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f9ff;
+    }
+  </style>
+</head>
+<body>
+  <header>Top Cryptocurrencies by Market Cap</header>
+  <table id="market-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Market Cap</th>
+        <th>24h Change</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function fetchMarketData() {
+      const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false');
+      const data = await res.json();
+      const tbody = document.querySelector("#market-table tbody");
+      tbody.innerHTML = "";
+      data.forEach((coin, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${coin.name} (${coin.symbol.toUpperCase()})</td>
+          <td>$${coin.current_price.toLocaleString()}</td>
+          <td>$${coin.market_cap.toLocaleString()}</td>
+          <td style="color:${coin.price_change_percentage_24h >= 0 ? 'green' : 'red'}">${coin.price_change_percentage_24h.toFixed(2)}%</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    fetchMarketData();
+    setInterval(fetchMarketData, 60000); // Update every 60 seconds
+  </script>
+</body>
+</html>
