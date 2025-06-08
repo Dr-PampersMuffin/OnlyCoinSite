@@ -2,65 +2,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OnlyCoin - Official Site</title>
-  <style>
-    body {
-      background-color: #0d0d0d;
-      color: #00eaff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #1a1a1a;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav a {
-      color: #00eaff;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: bold;
-    }
-    .hero {
-      text-align: center;
-      padding: 4rem 2rem;
-    }
-    .hero h1 {
-      font-size: 3rem;
-    }
-    .section {
-      padding: 2rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>OnlyCoin - Official Site</title>
+    <style>
+        body { background-color: #000; color: #0ff; font-family: Arial; margin: 0; }
+        nav { background-color: #111; padding: 10px; display: flex; justify-content: space-around; }
+        nav a { color: #0ff; text-decoration: none; padding: 8px; }
+        .banner { background-color: #222; padding: 50px; text-align: center; color: #0ff; font-size: 2em; }
+        .section { padding: 20px; }
+    </style>
 </head>
 <body>
-  <header>
-    <div><strong>OnlyCoin</strong></div>
     <nav>
-      <a href="#">About</a>
-      <a href="#">Tokenomics</a>
-      <a href="#">Team</a>
-      <a href="#">Roadmap</a>
-      <a href="#">Audit</a>
-      <a href="https://twitter.com/OnlyCoinToken" target="_blank">Twitter</a>
-      <a href="https://t.me/OnlyCoin_Official" target="_blank">Telegram</a>
-      <a href="https://discord.gg/k2w9uyUf" target="_blank">Discord</a>
-      <a href="markets.html">Markets Overview</a>
-      <a href="whitepaper.pdf">Documentation</a>
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#team">Team</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#audit">Audit</a>
+        <a href="https://twitter.com/OnlyCoinToken" target="_blank">Twitter</a>
+        <a href="https://t.me/OnlyCoin" target="_blank">Telegram</a>
+        <a href="https://discord.gg/k2w9uyUf" target="_blank">Discord</a>
+        <a href="markets.html">Markets Overview</a>
+        <a href="whitepaper.pdf" target="_blank">Documentation</a>
+        <a href="https://github.com/Dr-PampersMuffin" target="_blank">GitHub</a>
     </nav>
-  </header>
-  <div class="hero">
-    <h1>Welcome to OnlyCoin</h1>
-    <p>Where meme culture meets real-world utility on the Binance Smart Chain.</p>
-  </div>
-  <div class="section">
-    <h2>Our Mission</h2>
-    <p>OnlyCoin is more than a meme token — it’s a community-powered financial movement bridging the best of DeFi, tipping, NFTs, and staking into one cohesive ecosystem.</p>
-  </div>
+
+    <div class="banner">Welcome to OnlyCoin – The Future of Meme Utility</div>
+
+    <div id="about" class="section"><h2>About</h2><p>OnlyCoin merges meme culture with DeFi utility, inspired by top blockchain projects.</p></div>
+    <div id="tokenomics" class="section"><h2>Tokenomics</h2><p>Total Supply: 1,000,000<br>Type: BEP-20<br>Liquidity: Locked until Sept 2025</p></div>
+    <div id="team" class="section"><h2>Team</h2><p>Community driven leadership with transparency and growth vision.</p></div>
+    <div id="roadmap" class="section"><h2>Roadmap</h2><p>Q2: Launch<br>Q3: Staking, CEX outreach<br>Q4: NFT integration</p></div>
+    <div id="audit" class="section"><h2>Audit</h2><p>Smart contract verified on BscScan. External audit scheduled Q3 2025.</p></div>
 </body>
 </html>
