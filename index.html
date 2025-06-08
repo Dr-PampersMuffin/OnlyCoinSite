@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OnlyCoin - Official</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #news-ticker {
+      width: 100%;
+      overflow: hidden;
+      background: #111;
+      color: #ff4d4d;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    #news-ticker p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker 30s linear infinite;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
 </head>
 <body>
   <div style="text-align:center; margin-top:10px;">
@@ -18,72 +37,62 @@
     <a href="#roadmap">Roadmap</a>
     <a href="#market">Market</a>
     <a href="#whitepaper">Whitepaper</a>
-    <a href="#news">News</a>
   </nav>
   <main>
     <section id="about">
-      <h2>About OnlyCoin</h2>
-      <p>OnlyCoin is a next-generation decentralized platform inspired by the top-performing cryptocurrencies. We merge the privacy and community-driven model of Web3 with a unique creator economy focus. Our vision is to empower creators, users, and investors through a seamless, secure, and rewarding blockchain ecosystem.</p>
+      <h2>About</h2>
+      <p>OnlyCoin is a next-gen token platform combining privacy, creator incentives, and utility inspired by the best aspects of top tokens like Solana, Ethereum, and BNB.</p>
     </section>
     <section id="tokenomics">
       <h2>Tokenomics</h2>
       <ul>
-        <li>Total Supply: 1,000,000,000 ONLY</li>
-        <li>Liquidity Pool: 500,000,000 ONLY</li>
-        <li>Team & Development: 150,000,000 ONLY</li>
-        <li>Marketing: 100,000,000 ONLY</li>
-        <li>Staking Rewards: 50,000,000 ONLY</li>
-        <li>Burn Reserve: 200,000,000 ONLY</li>
+        <li>Total Supply: 1B</li>
+        <li>Liquidity: 50%</li>
+        <li>Team: 15%</li>
+        <li>Marketing: 10%</li>
+        <li>Staking: 5%</li>
+        <li>Burn Reserve: 20%</li>
       </ul>
     </section>
     <section id="team">
       <h2>Team</h2>
-      <p>Our experienced team includes blockchain engineers, auditors, and growth strategists:</p>
       <ul>
-        <li>Sarah Khalid – Blockchain Engineer (PhD, former BSC developer)</li>
-        <li>Mark Elwood – Solidity Auditor (5+ years, ex-CertiK)</li>
-        <li>Priya Das – Community Lead (Telegram/Discord scaling)</li>
+        <li>Sarah Khalid – Blockchain Dev</li>
+        <li>Mark Elwood – Auditor</li>
+        <li>Priya Das – Community Head</li>
       </ul>
     </section>
     <section id="roadmap">
       <h2>Roadmap</h2>
       <ol>
-        <li>Q2 2025 – Launch, liquidity lock, whitepaper</li>
-        <li>Q3 2025 – Listings, team KYC, marketing</li>
-        <li>Q4 2025 – DAO voting, staking platform</li>
-        <li>Q1 2026 – Cross-chain bridge, NFT utilities</li>
+        <li>Q2 2025 – Launch & Lock</li>
+        <li>Q3 2025 – Listings & PR</li>
+        <li>Q4 2025 – DAO & Staking</li>
       </ol>
     </section>
     <section id="market">
-      <h2>Live Market</h2>
-      <h3>OnlyCoin/BNB</h3>
+      <h2>Market</h2>
+      <h3>OnlyCoin/BNB Chart</h3>
       <iframe src="https://www.dextools.io/widget-chart/en/bnb/0x342b34b131faf8846157365a31d144f8dc7d291a?theme=dark&chartType=1" width="100%" height="400" frameborder="0"></iframe>
       <h3>Top 10 Cryptos</h3>
-      <iframe src="https://coinmarketcap.com/widgets/coins/" width="100%" height="450" frameborder="0"></iframe>
+      <iframe src="https://s.tradingview.com/embed-widget/market-quotes/?locale=en#%7B%22symbolsGroups%22%3A%5B%7B%22name%22%3A%22Crypto%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22BINANCE%3ABTCUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AETHUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ASOLUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AXRPUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ADOGEUSDT%22%7D%5D%7D%5D%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%7D" width="100%" height="400" frameborder="0"></iframe>
     </section>
     <section id="whitepaper">
       <h2>Whitepaper</h2>
-      <a href="OnlyCoin_Whitepaper.pdf" download>Download the OnlyCoin Whitepaper (PDF)</a>
-    </section>
-    <section id="news">
-      <h2>Crypto News</h2>
-      <ul>
-        <li><strong>Bitcoin ETF approvals push BTC over $70k</strong> – Source: CoinDesk</li>
-        <li><strong>Ethereum Dencun upgrade slashes gas fees</strong> – Source: CoinTelegraph</li>
-        <li><strong>Binance launches new layer-2 chain</strong> – Source: CryptoSlate</li>
-        <li><strong>Ripple court case update favors XRP</strong> – Source: CoinDesk</li>
-        <li><strong>Solana integrates AI inference on-chain</strong> – Source: The Block</li>
-      </ul>
+      <a href="OnlyCoin_Whitepaper.pdf" download>Download the OnlyCoin Whitepaper</a>
     </section>
   </main>
+  <div id="news-ticker">
+    <p>Bitcoin ETFs surge markets | ETH gas fees drop 40% | Solana integrates AI | Binance launches zk-Rollup | Ripple wins court round</p>
+  </div>
   <footer>
-    <p>© 2025 OnlyCoin. All rights reserved.</p>
-    <p>
+    <p>© 2025 OnlyCoin</p>
+    <div>
       <a href="https://twitter.com/OnlyCoinToken"><img src="twitter.png" alt="Twitter" style="height:24px;"></a>
       <a href="https://github.com/Dr-PampersMuffin/OnlyCoinSite"><img src="github.png" alt="GitHub" style="height:24px;"></a>
       <a href="https://t.me/OnlyCoinOfficialGroup"><img src="telegram.png" alt="Telegram" style="height:24px;"></a>
       <a href="https://discord.gg/k2w9uyUf"><img src="discord.png" alt="Discord" style="height:24px;"></a>
-    </p>
+    </div>
   </footer>
 </body>
 </html>
