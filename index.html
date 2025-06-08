@@ -1,84 +1,72 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>OnlyCoin - Official</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>OnlyCoin - Official Token Site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  
+<script>
+function switchLang(lang) {
+  document.querySelectorAll("[data-lang]").forEach(el => {
+    el.style.display = el.getAttribute("data-lang") === lang ? "block" : "none";
+  });
+}
+</script>
+
 </head>
 <body>
-    <header>
-        
-        <nav>
-            <a href="#about">About</a>
-            <a href="#tokenomics">Tokenomics</a>
-            <a href="#team">Team</a>
-            <a href="#roadmap">Roadmap</a>
-            <a href="#audit">Audit</a>
-            <a href="#market">Market</a>
-        </nav>
-        <div class="banner">
-            <h1>OnlyCoin</h1>
-        </div>
-    </header>
-    <main>
-        <section id="about">
-            <h2>About OnlyCoin</h2>
-            <p>OnlyCoin is a decentralized social crypto platform redefining privacy, content, and community incentives.</p>
-        </section>
-        <section id="tokenomics">
-            <h2>Tokenomics</h2>
-            <ul>
-                <li>Total Supply: 1,000,000,000 ONLY</li>
-                <li>Burned: 20%</li>
-                <li>Liquidity Locked: 3 months</li>
-                <li>Initial DEX Offering: PancakeSwap</li>
-            </ul>
-        </section>
-        <section id="team">
-            <h2>Team</h2>
-            <ul>
-                <li><strong>Dr. Sarah Khalid</strong> – Blockchain Engineer (PhD, former BSC Core Dev)</li>
-                <li><strong>Mark Elwood</strong> – Solidity Auditor (5 years experience, CertiK partner)</li>
-                <li><strong>Priya Das</strong> – Growth Lead (Ex-Reddit & DeSo consultant)</li>
-            </ul>
-        </section>
-        <section id="roadmap">
-            <h2>Roadmap</h2>
-            <ol>
-                <li>Q2 2025 – Token Launch + LP Lock</li>
-                <li>Q3 2025 – Listings (DEXTools, CoinGecko), Community Growth</li>
-                <li>Q4 2025 – Mobile App Beta, NFT Utility, CEX Onboarding</li>
-            </ol>
-        </section>
-        <section id="audit">
-            <h2>Audit</h2>
-            <p>The OnlyCoin contract is undergoing CertiK-inspired code validation. Full PDF will be published post-review.</p>
-        </section>
-        
-
-<section id="market">
-    <h2>Live Market Overview</h2>
-    <iframe src="https://www.dextools.io/widget-chart/en/bnb/0x342b34b131faf8846157365a31d144f8dc7d291a?theme=dark&chartType=2&chartResolution=30" 
-        width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+  <header class="banner"></header>
+  <nav class="nav-animated">
+    <a href="#about">About</a>
+    <a href="#tokenomics">Tokenomics</a>
+    <a href="#team">Team</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#market">Market</a>
+    <a href="#whitepaper">Whitepaper</a>
+    <a href="#widgets">News & Tools</a>
+    <a href="https://pancakeswap.finance/swap?outputCurrency=0xC0912c990fe376Bc74776b79BAf28456dAdDC055" target="_blank">Buy</a>
+  </nav>
+  <div class="language-bar">
+    <button onclick="switchLang('en')">EN</button>
+    <button onclick="switchLang('ar')">AR</button>
+    <button onclick="switchLang('fr')">FR</button>
+    <button onclick="switchLang('es')">ES</button>
+    <button onclick="switchLang('zh')">ZH</button>
+  </div>
+  <main>
+    
+<section id="about">
+  <h2>About OnlyCoin</h2>
+  <div data-lang="en" style="display:block;">OnlyCoin is a decentralized token merging privacy and creator empowerment.</div>
+  <div data-lang="ar" style="display:none;">أونلي كوين هو رمز لامركزي يجمع بين الخصوصية وتمكين المبدعين.</div>
+  <div data-lang="fr" style="display:none;">OnlyCoin est un jeton décentralisé alliant confidentialité et autonomie des créateurs.</div>
+  <div data-lang="es" style="display:none;">OnlyCoin es un token descentralizado que combina privacidad y empoderamiento de creadores.</div>
+  <div data-lang="zh" style="display:none;">OnlyCoin 是一個結合隱私與創作者賦能的去中心化代幣。</div>
 </section>
-
 
     
-<section id="whitepaper">
-    <h2>Whitepaper</h2>
-    <p>Download the latest technical whitepaper outlining the OnlyCoin vision, tokenomics, smart contract logic, governance framework, and ecosystem roadmap.</p>
-    <a href="OnlyCoin_Whitepaper.pdf" download style="color:#00ffff;font-weight:bold;">Download Whitepaper (PDF)</a>
+<section id="market">
+  <h2>Live Price: <span style="color:#00bfff; font-size: 28px;">ONLY/BNB</span></h2>
+  <iframe src="https://www.coingecko.com/en/coins/binancecoin/widgets#panel" width="100%" height="100" frameborder="0"></iframe>
 </section>
 
-</main>
-    <footer>
-        <p>© 2025 OnlyCoin. All rights reserved.</p>
-        <p>
-            <a href="https://twitter.com/OnlyCoinToken">Twitter</a> |
-            <a href="https://github.com/Dr-PampersMuffin/OnlyCoinSite">GitHub</a> |
-            <a href="https://t.me/OnlyCoinOfficialGroup">Telegram</a> | <a href="https://discord.gg/k2w9uyUf">Discord</a>
-        </p>
-    </footer>
+    
+<section id="widgets">
+  <h2>Crypto Dashboard</h2>
+  <iframe src="https://widget.coinlib.io/widget?type=full_v2&theme=dark&cnt=10&pref_coin_id=1505" width="100%" height="500" frameborder="0"></iframe>
+  <iframe src="https://cryptopanic.com/news/all/?utm_source=coingecko&utm_medium=referral&utm_campaign=widgets" width="100%" height="400" frameborder="0"></iframe>
+</section>
+
+  </main>
+  <footer>
+    <p>© 2025 OnlyCoin. All rights reserved.</p>
+    <p>
+      <a href="https://twitter.com/OnlyCoinToken">Twitter</a> |
+      <a href="https://github.com/Dr-PampersMuffin/OnlyCoinSite">GitHub</a> |
+      <a href="https://t.me/OnlyCoinOfficialGroup">Telegram</a> |
+      <a href="https://discord.gg/k2w9uyUf">Discord</a>
+    </p>
+  </footer>
 </body>
 </html>
