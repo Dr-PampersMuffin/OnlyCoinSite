@@ -178,17 +178,62 @@
     </h2>
 <h3>
      OnlyCoin/BNB Chart
-    </h3>
-<iframe frameborder="0" height="400" src="https://www.dextools.io/widget-chart/en/bnb/0x342b34b131faf8846157365a31d144f8dc7d291a?theme=dark&amp;chartType=1" width="100%">
-</iframe>
-<h3>
-     Top 10 Cryptos
-    </h3>
-<iframe frameborder="0" height="400" src="https://s.tradingview.com/embed-widget/market-quotes/?locale=en#%7B%22symbolsGroups%22%3A%5B%7B%22name%22%3A%22Crypto%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22BINANCE%3ABTCUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AETHUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ASOLUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AXRPUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ADOGEUSDT%22%7D%5D%7D%5D%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%7D" width="100%">
-</iframe>
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OnlyCoin / BNB Market</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+    section#market {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    section#market h2 {
+      margin: 20px 0;
+      text-align: center;
+      color: #333;
+    }
+    .market-widget {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .market-widget iframe {
+      display: block;
+      width: 100%;
+      height: 500px;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+<section id="market">
+  <h2>📊 OnlyCoin / BNB Market View</h2>
+  <div class="market-widget">
+    <iframe 
+      src="https://www.dextools.io/widget-chart/en/bnb/0x2d7873c4c57384dc90dadb98f6b7e8dcd4bb7cc" 
+      allowfullscreen>
+    </iframe>
+  </div>
 </section>
-<section id="whitepaper">
-<h2 style="color: #ffff99;">
+
+</body>
+</html>
+
      Whitepaper
     </h2>
 <a download="" href="OnlyCoin_Whitepaper.pdf" style="color: #ffff99;">
