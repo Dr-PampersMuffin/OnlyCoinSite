@@ -176,12 +176,25 @@
 </section>
 </main>
 <div id="news-ticker">
-<p>
-    Bitcoin ETFs surge markets | ETH gas fees drop 40% | Solana integrates AI | Binance launches zk-Rollup | Ripple wins court round
-   </p>
+<div id="crypto-ticker" style="white-space: nowrap; overflow: hidden; background: black; color: red; font-weight: bold; padding: 10px; font-size: 16px;">
+  Loading live market data...
 </div>
-<footer>
-<p>
+<script>
+  async function fetchTicker() {
+    try {
+      const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1');
+      const data = await res.json();
+      const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price.toFixed(2)} (${(c.price_change_percentage_24h || 0).toFixed(2)}%)`).join(' | ');
+      document.getElementById('crypto-ticker').textContent = ticker;
+    } catch (e) {
+      document.getElementById('crypto-ticker').textContent = 'Failed to load data';
+    }
+  }
+
+  fetchTicker();
+  setInterval(fetchTicker, 60000); // Refresh every 60 seconds
+</script>
+
     © 2025 OnlyCoin
    </p>
 <div>
