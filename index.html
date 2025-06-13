@@ -28,7 +28,7 @@
     }
   </style>
 </head>
-<body><div id="crypto-ticker" style="white-space: nowrap; overflow: hidden; background: black; color: red; font-weight: bold; padding: 10px; font-size: 16px;">Loading live market data...</div>
+<body>
 <header class="banner">
 </header>
 <nav class="nav-animated" style="background: #000; padding: 10px;">
@@ -61,6 +61,75 @@
 <p>OnlyCoin also pioneers a Creator Vault Protocol, enabling verified creators to stake tokens and earn royalty streams via smart contract-based dividends — merging NFT utility with recurring income mechanisms. This innovative token is more than just another altcoin — it's a movement empowering digital ownership and financial autonomy.</p>
 </section>
 <section id="tokenomics"><h2 style="color: #ffff99;">Tokenomics</h2><div style="color: #ffff99; font-size: 16px; margin-bottom: 20px;">Total Supply: 1,000,000 | Liquidity: 50% | Team: 15% | Marketing: 10% | Staking: 5% | Burn Reserve: 20%</div><iframe height="900" src="tokenomics.html" style="border:none;" width="100%"></iframe></section>
+<section id="team">
+<h2 style="color: #ffff99;">
+     Team
+    </h2>
+<div class="team-member">
+<h3>
+      Zak “Dr. PampersMuffin” Jones – Founder &amp; Strategist
+     </h3>
+<p>
+<a href="https://linkedin.com/in/zak-oc-founder" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       LinkedIn
+      </a>
+      |
+      <a href="https://github.com/Dr-PampersMuffin" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       GitHub
+      </a>
+</p>
+<p>
+      Visionary behind OnlyCoin, blending DeFi accessibility with influencer-driven crypto culture. 8 years in digital strategy and tokenomics design.
+     </p>
+</div>
+<div class="team-member">
+<h3>
+      Amina Idris – Smart Contract Developer
+     </h3>
+<p>
+<a href="https://linkedin.com/in/aminaidris-dev" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       LinkedIn
+      </a>
+      |
+      <a href="https://github.com/aminaidris-dev" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       GitHub
+      </a>
+</p>
+<p>
+      Solidity engineer specializing in Binance Smart Chain contracts. Former contributor to SafeMoon forks and NFT minting systems.
+     </p>
+</div>
+<div class="team-member">
+<h3>
+      Leo Marques – Front-End Engineer
+     </h3>
+<p>
+<a href="https://linkedin.com/in/leomarques-ui" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       LinkedIn
+      </a>
+      |
+      <a href="https://github.com/leomarques-ui" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       GitHub
+      </a>
+</p>
+<p>
+      UI/UX developer with a focus on responsive crypto dashboards. Built interfaces for DeFi tools, NFT launchpads, and DEX analytics.
+     </p>
+</div>
+<div class="team-member">
+<h3>
+      Anika Sharma – Marketing &amp; Community Lead
+     </h3>
+<p>
+<a href="https://linkedin.com/in/anikasharma-defi" style="color:#ff0044; text-shadow:0 0 5px #ff0044;color: #ffff99;" target="_blank">
+       LinkedIn
+      </a>
+</p>
+<p>
+      Builds viral crypto campaigns with proven success in token launches and meme branding. Manages X, Telegram, and Discord presence.
+     </p>
+</div>
+</section>
 <section id="roadmap">
 <h2 style="color: #ffff99;">
      Roadmap
@@ -93,11 +162,11 @@
 </iframe>
 <p><a href="https://www.dextools.io/app/en/bnb/pair-explorer/0x342b34b131faf8846157365a31d144f8dc7d291a" style="color:#00ccff; font-weight:bold; text-decoration:none; display:inline-block; margin-top:10px; background:#111; border:1px solid #00ccff; padding:10px 15px; border-radius:6px;" target="_blank">🔁 View OnlyCoin/BNB Conversion on DEXTools</a></p></section>
 <div style="text-align: center; padding: 10px; background: #1a1a1a; color: white; border-radius: 10px; margin-top: 20px;">
-<img alt="Mudra Lock" src="https://mudra.website/logo.png" width="100"/>
-<p>🚀 <strong>Liquidity Locked:</strong> 20,000,000 OnlyCoin until <strong>Sept 7, 2025</strong></p>
-<a href="https://mudra.website/?certificate=yes&amp;type=lock&amp;chain=BSC&amp;lock=0xC0912c990fe376Bc74776b79BAf28456dAdDC055" style="color: #00ffd1;" target="_blank">🔒 View Lock on Mudra</a>
+  <img src="https://mudra.website/static/media/logo.66b7986a.svg" alt="Mudra Lock" width="100">
+  <p>🚀 <strong>Liquidity Locked:</strong> 20,000,000 OnlyCoin until <strong>Sept 7, 2025</strong></p>
+  <a href="https://mudra.website/?certificate=yes&type=lock&chain=BSC&lock=0xC0912c990fe376Bc74776b79BAf28456dAdDC055" target="_blank" style="color: #00ffd1;">🔒 View Lock on Mudra</a>
 </div>
-<section id="whitepaper">
+   <section id="whitepaper">
 <h2 style="color: #ffff99;">
      Whitepaper
     </h2>
@@ -128,59 +197,5 @@
 </a>
 </div>
 </footer>
-<script>
-async function fetchTicker() {
-  try {
-    const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1');
-    const data = await res.json();
-    const ticker = data.map(c => `${c.symbol.toUpperCase()}: $${c.current_price.toFixed(2)} (${(c.price_change_percentage_24h || 0).toFixed(2)}%)`).join(' | ');
-    document.getElementById('crypto-ticker').textContent = ticker;
-  } catch (e) {
-    document.getElementById('crypto-ticker').textContent = 'Failed to load data';
-  }
-}
-fetchTicker();
-setInterval(fetchTicker, 60000);
-</script>
-
-<section class="section" id="team">
-<h2>Team</h2>
-<div class="team-member">
-<img alt="Zak Jones" src="images/zak-jones.jpg" width="150"/>
-<p>
-<strong>Zak “Dr. PampersMuffin” Jones – Founder &amp; Strategist</strong><br/>
-<em>Visionary behind OnlyCoin, blending DeFi accessibility with influencer-driven crypto culture. 8 years in digital strategy and tokenomics design.</em><br/>
-<a href="https://linkedin.com/in/zakjones-defi" target="_blank">LinkedIn</a> |
-      <a href="https://github.com/Dr-PampersMuffin" target="_blank">GitHub</a>
-</p>
-</div>
-<div class="team-member">
-<img alt="Amina Idris" src="images/amina-idris.jpg" width="150"/>
-<p>
-<strong>Amina Idris – Smart Contract Developer</strong><br/>
-<em>Solidity engineer specializing in Binance Smart Chain contracts. Former contributor to SafeMoon forks and NFT minting systems.</em><br/>
-<a href="https://linkedin.com/in/amina-idris-bsc" target="_blank">LinkedIn</a> |
-      <a href="https://github.com/amina-idris-bsc" target="_blank">GitHub</a>
-</p>
-</div>
-<div class="team-member">
-<img alt="Leo Marques" src="images/leo-marques.jpg" width="150"/>
-<p>
-<strong>Leo Marques – Front-End Engineer</strong><br/>
-<em>UI/UX developer with a focus on responsive crypto dashboards. Built interfaces for DeFi tools, NFT launchpads, and DEX analytics.</em><br/>
-<a href="https://linkedin.com/in/leo-marques-ui" target="_blank">LinkedIn</a> |
-      <a href="https://github.com/leo-marques-ui" target="_blank">GitHub</a>
-</p>
-</div>
-<div class="team-member">
-<img alt="Anika Sharma" src="images/anika-sharma.jpg" width="150"/>
-<p>
-<strong>Anika Sharma – Marketing &amp; Community Lead</strong><br/>
-<em>Builds viral crypto campaigns with proven success in token launches and meme branding. Manages X, Telegram, and Discord presence.</em><br/>
-<a href="https://linkedin.com/in/anikasharma-token" target="_blank">LinkedIn</a>
-</p>
-</div>
-</section>
-
 </body>
 </html>
