@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Are You OnlyFan Enough for OnlyCoin?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #ff80ab, #ff4081);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #ff4081;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        #submitBtn {
+            background-color: #ff4081;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #airdropForm {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            margin-top: 10px;
+            background-color: #ff4081;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Are You OnlyFan Enough for OnlyCoin?</h1>
+        <form id="quizForm">
+            <div class="question">
+                <h3>1. What blockchain is OnlyCoin built on?</h3>
+                <label><input type="radio" name="q1" value="bep20"> Binance Smart Chain (BEP-20)</label>
+                <label><input type="radio" name="q1" value="erc20"> Ethereum (ERC-20)</label>
+                <label><input type="radio" name="q1" value="solana"> Solana</label>
+            </div>
+            <div class="question">
+                <h3>2. What is the presale price of OnlyCoin?</h3>
+                <label><input type="radio" name="q2" value="100k"> 1 BNB = 100,000 OnlyCoin</label>
+                <label><input type="radio" name="q2" value="10k"> 1 BNB = 10,000 OnlyCoin</label>
+                <label><input type="radio" name="q2" value="1m"> 1 BNB = 1,000,000 OnlyCoin</label>
+            </div>
+            <div class="question">
+                <h3>3. What is the soft cap of the presale?</h3>
+                <label><input type="radio" name="q3" value="50"> 50 BNB</label>
+                <label><input type="radio" name="q3" value="100"> 100 BNB</label>
+                <label><input type="radio" name="q3" value="25"> 25 BNB</label>
+            </div>
+            <div class="question">
+                <h3>4. What makes OnlyCoin different from Lil Pepe?</h3>
+                <label><input type="radio" name="q4" value="utility"> Utility and presale structure</label>
+                <label><input type="radio" name="q4" value="frog"> It's also a frog</label>
+                <label><input type="radio" name="q4" value="copy"> It's a copy</label>
+            </div>
+            <div class="question">
+                <h3>5. When does the OnlyCoin presale start?</h3>
+                <label><input type="radio" name="q5" value="july5"> July 5, 2025</label>
+                <label><input type="radio" name="q5" value="june1"> June 1, 2025</label>
+                <label><input type="radio" name="q5" value="aug1"> August 1, 2025</label>
+            </div>
+            <button type="button" id="submitBtn">Submit Quiz</button>
+        </form>
+        <div id="result"></div>
+        <div id="airdropForm">
+            <h3>🎉 You're OnlyFan enough! Enter your wallet address for the airdrop:</h3>
+            <form>
+                <input type="text" placeholder="Your BEP-20 Wallet Address" required>
+                <br>
+                <input type="submit" value="Claim Airdrop">
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById("submitBtn").onclick = function() {
+            const answers = {
+                q1: "bep20",
+                q2: "100k",
+                q3: "50",
+                q4: "utility",
+                q5: "july5"
+            };
+            let score = 0;
+            for (let q in answers) {
+                const selected = document.querySelector('input[name="' + q + '"]:checked');
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+            const result = document.getElementById("result");
+            if (score === 5) {
+                result.innerHTML = "🔥 You scored 5/5! You're eligible for the airdrop!";
+                document.getElementById("airdropForm").style.display = "block";
+            } else {
+                result.innerHTML = "😢 You scored " + score + "/5. Try again to qualify for the airdrop!";
+                document.getElementById("airdropForm").style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
