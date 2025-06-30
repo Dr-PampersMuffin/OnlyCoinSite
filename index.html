@@ -48,8 +48,102 @@
 <a href="#whitepaper" style="color: #ffff99; margin: 0 12px; text-decoration: none; font-weight: bold;color: #ffff99;">
     Whitepaper
    </a>
-<a href="https://pancakeswap.finance/swap?outputCurrency=0xC0912c990fe376Bc74776b79BAf28456dAdDC055" style="color: #ffff99; margin: 0 12px; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank">
-    Buy
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy OnlyCoin</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+    .card {
+      background: #1f1f1f;
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+    }
+    input {
+      width: 200px;
+    }
+    button {
+      background: #ff0055;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #cc0044;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Buy $OnlyCoin</h1>
+    <p>Enter BNB amount:</p>
+    <input type="number" id="bnbAmount" step="0.001" placeholder="e.g. 0.01" />
+    <br />
+    <button onclick="buyOnlyCoin()">Buy OnlyCoin</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const CONTRACT_ADDRESS = "0x342b34b131faf8846157365a31d144f8dc7d291a";
+    const ABI = [
+      {
+        "inputs": [],
+        "name": "buyOnlyCoin",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      }
+    ];
+
+    async function buyOnlyCoin() {
+      if (typeof window.ethereum === 'undefined') {
+        alert("Please install MetaMask to use this feature.");
+        return;
+      }
+
+      const web3 = new Web3(window.ethereum);
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+      const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
+      const accounts = await web3.eth.getAccounts();
+      const sender = accounts[0];
+      const bnbAmount = document.getElementById("bnbAmount").value;
+
+      if (!bnbAmount || bnbAmount <= 0) {
+        alert("Please enter a valid BNB amount.");
+        return;
+      }
+
+      try {
+        document.getElementById("status").innerText = "⏳ Sending transaction...";
+        const tx = await contract.methods.buyOnlyCoin().send({
+          from: sender,
+          value: web3.utils.toWei(bnbAmount, "ether")
+        });
+        document.getElementById("status").innerText = `✅ Transaction sent: ${tx.transactionHash}`;
+      } catch (err) {
+        console.error(err);
+        document.getElementById("status").innerText = "❌ Transaction failed.";
+      }
+    }
+  </script>
+</body>
+</html>
    </a>
 </nav>
 <main>
