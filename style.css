@@ -1,4 +1,3 @@
-/* style.css — recreate and upload this to your repo */
 
 body {
   margin: 0;
@@ -14,10 +13,12 @@ header {
 }
 
 .logo-banner {
-  width: 180px;
+  width: 160px;
   height: auto;
   margin: 0 auto;
   display: block;
+  border-radius: 50%;
+  box-shadow: 0 0 10px gray;
 }
 
 nav {
