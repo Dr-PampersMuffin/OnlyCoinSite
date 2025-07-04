@@ -95,31 +95,41 @@
   </style>
 </head>
 <body>
-  <button id="connectButton">Connect Wallet</button>
+ <body>
+  <button id="connectButton" style="margin: 20px auto; display: block; padding: 10px 20px;">Connect Wallet</button>
+
   <div class="container">
     <div class="swap-box">
       <div class="swap-title">Swap</div>
+
+      <!-- BNB Input -->
       <div class="swap-row">
-        <input type="text" value="0.1">
-        <div style="display:flex; align-items:center;">
-          <img src="./images/BNB.png" alt="BNB">
+        <input type="number" id="bnbAmount" placeholder="Enter BNB amount" style="padding: 10px; width: 100%;">
+        <div style="display:flex; align-items:center; margin-top: 10px;">
+          <img src="./images/BNB.png" alt="BNB" style="width:24px; height:24px;">
           <span style="margin-left:5px;">BNB</span>
         </div>
       </div>
+
       <div class="price-info">&#8776; $57.32</div>
-      <div style="text-align:center; margin-bottom: 20px;">
-        <span style="font-size: 20px;">&#8645;</span>
+
+      <div style="text-align:center; margin: 20px 0;">
+        <span style="font-size: 24px;">&#8645;</span>
       </div>
+
+      <!-- Output Token -->
       <div class="swap-row">
-        <input type="text" value="5000">
-        <div style="display:flex; align-items:center;">
-          <img src="./images/logo.png" alt="ONLY">
+        <input type="text" id="onlyOutput" placeholder="Receiving ONLY amount" readonly>
+        <div style="display:flex; align-items:center; margin-top: 10px;">
+          <img src="./images/logo.png" alt="ONLY" style="width:24px; height:24px;">
           <span style="margin-left:5px;">ONLY</span>
         </div>
       </div>
+
       <div class="price-info">Price: 0.00002 BNB per ONLY</div>
-      <button class="swap-btn">Swap</button>
+
+      <button id="swapButton">Swap</button>
     </div>
   </div>
 </body>
-</html>
+
