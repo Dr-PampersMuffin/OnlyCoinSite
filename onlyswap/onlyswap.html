@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,22 +78,30 @@
   </style>
 </head>
 <body>
-  <div class="connect-btn">Connect Wallet</div>
+  <button class="connect-btn" id="connect-btn">Connect Wallet</button>
+  <div id="wallet-address" style="text-align: right; padding: 10px 20px; font-size: 0.9em;"></div>
+
   <div class="header">OnlyCoin</div>
   <div class="swap-container">
     <div class="swap-title">Swap</div>
+
     <div class="token-box">
-      <span>0.1 ≈ $57.32</span>
+      <input type="number" id="bnb-input" placeholder="Enter BNB" style="width: 60%; padding: 8px;">
       <span><img src="images/BNB.png" alt="bnb"> BNB</span>
     </div>
+
     <div style="text-align: center; margin: 10px 0;">⇅</div>
+
     <div class="token-box">
-      <span>5000</span>
+      <input type="text" id="only-output" placeholder="Estimated ONLY" readonly style="width: 60%; padding: 8px;">
       <span><img src="images/logo.png" alt="OnlyCoin"> ONLY</span>
     </div>
-    <div class="price-info">Price: 0.00002 BNB per ONLY</div>
-    <button class="swap-btn">Swap</button>
+
+    <div class="price-info">Price: ~ live via PancakeSwap</div>
+    <button id="swap-btn" class="swap-btn">Swap</button>
   </div>
+
+  <!-- Load Script -->
   <script type="module" src="./script.js"></script>
 </body>
 </html>
