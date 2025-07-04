@@ -1,30 +1,96 @@
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background: #000;
-  color: #ffff99;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
+  background-color: #0d0d0d;
+  background-image: url('images/silhouette.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
 }
-.swap-box {
-  background: #111;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
+
+.header {
   text-align: center;
+  padding: 30px;
+  font-size: 2.5em;
+  color: red;
+  font-weight: bold;
+  text-shadow: 0 0 10px red;
 }
-input {
-  width: 90%;
-  padding: 10px;
+
+.wallet-info {
+  text-align: right;
+  padding: 10px 20px;
+  font-size: 0.9em;
+}
+
+.swap-container {
+  max-width: 400px;
+  margin: 50px auto;
+  background: #1a1a1a;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px #ff0000;
+}
+
+.swap-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.token-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  padding: 15px;
+  border-radius: 10px;
   margin: 10px 0;
+}
+
+.token-box input {
+  width: 60%;
+  padding: 8px;
+  border: none;
   border-radius: 5px;
 }
-button {
-  padding: 10px 20px;
+
+.token-box img {
+  height: 30px;
+  margin-left: 10px;
+}
+
+.arrow {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.price-info {
+  text-align: left;
+  color: #ccc;
+  font-size: 0.9em;
   margin-top: 10px;
-  background: #ff4d4d;
+}
+
+.swap-btn {
+  width: 100%;
+  padding: 15px;
+  background: red;
   border: none;
   color: white;
+  font-size: 1.2em;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.connect-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
   cursor: pointer;
 }
