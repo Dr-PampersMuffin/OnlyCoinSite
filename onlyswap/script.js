@@ -1,3 +1,4 @@
+
 import { ethers } from "https://cdn.ethers.io/lib/ethers-5.6.esm.min.js";
 
 const ONLY_ADDRESS = "0xC0912c990fe376Bc74776b79BAf28456dAdDC055";
@@ -5,8 +6,8 @@ const WBNB_ADDRESS = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
 const ROUTER_ADDRESS = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
 
 const abi = [
-  "function getAmountsOut(uint amountIn, address[] memory path) public view returns (uint[] memory amounts)",
-  "function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts)"
+  "function getAmountsOut(uint256 amountIn, address[] memory path) public view returns (uint256[] memory amounts)",
+  "function swapExactETHForTokens(uint256 amountOutMin, address[] calldata path, address to, uint256 deadline) external payable returns (uint256[] memory amounts)"
 ];
 
 let provider;
@@ -59,7 +60,9 @@ window.addEventListener("DOMContentLoaded", async () => {
           path,
           await signer.getAddress(),
           deadline,
-          { value: ethers.utils.parseEther(bnbAmount) }
+          {
+            value: ethers.utils.parseEther(bnbAmount)
+          }
         );
         await tx.wait();
         alert("Swap successful!");
