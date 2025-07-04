@@ -1,102 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <img src="./images/neononlycoin.png" style="width: 350px; height: auto;">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    <script src="script.js"></script>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #0f0f0f;
-      color: #fff;
-      background-image: url('./images/silhouette.png');
-      background-size: cover;
-      background-position: center;
-    }
-    .container {
-      max-width: 400px;
-      margin: 100px auto;
-      background-color: #1c1c1c;
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-    }
-    .header {
-      text-align: center;
-      font-size: 40px;
-      color: red;
-      font-weight: bold;
-      text-shadow: 0 0 10px red;
-    }
-    .connect-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background-color: #2b2b2b;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      border: none;
-    }
-    .swap-box {
-      margin-top: 40px;
-    }
-    .swap-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    .swap-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #2e2e2e;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    .swap-row img {
-      width: 24px;
-      height: 24px;
-      margin-left: 10px;
-    }
-    .price-info {
-      font-size: 12px;
-      color: #bbb;
-      text-align: left;
-      margin: 10px 0 20px 5px;
-    }
-    .swap-btn {
-      width: 100%;
-      padding: 15px;
-      background-color: red;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    input[type="text"] {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 18px;
-      width: 80%;
-    }
-    input:focus {
-      outline: none;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OnlySwap</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
- <body>
-  <button id="connectButton" style="margin: 20px auto; display: block; padding: 10px 20px;">Connect Wallet</button>
+<body style="background: url('./images/silhouette.png') center center no-repeat; background-size: cover; color: #fff; font-family: sans-serif;">
+  <button id="connectButton" style="margin: 20px auto; display: block; padding: 10px 20px; background-color: #ff004d; color: white; border: none; border-radius: 5px; cursor: pointer;">Connect Wallet</button>
 
   <div class="container">
     <div class="swap-box">
@@ -104,9 +15,9 @@
 
       <!-- BNB Input -->
       <div class="swap-row">
-        <input type="number" id="bnbAmount" placeholder="Enter BNB amount" style="padding: 10px; width: 100%;">
+        <input type="number" id="bnbAmount" placeholder="Enter BNB amount" style="padding: 10px; width: 100%;" />
         <div style="display:flex; align-items:center; margin-top: 10px;">
-          <img src="./images/BNB.png" alt="BNB" style="width:24px; height:24px;">
+          <img src="./images/BNB.png" alt="BNB" style="width:24px; height:24px;" />
           <span style="margin-left:5px;">BNB</span>
         </div>
       </div>
@@ -119,17 +30,19 @@
 
       <!-- Output Token -->
       <div class="swap-row">
-        <input type="text" id="onlyOutput" placeholder="Receiving ONLY amount" readonly>
+        <input type="text" id="onlyOutput" placeholder="Receiving ONLY amount" readonly />
         <div style="display:flex; align-items:center; margin-top: 10px;">
-          <img src="./images/logo.png" alt="ONLY" style="width:24px; height:24px;">
+          <img src="./images/logo.png" alt="ONLY" style="width:24px; height:24px;" />
           <span style="margin-left:5px;">ONLY</span>
         </div>
       </div>
 
       <div class="price-info">Price: 0.00002 BNB per ONLY</div>
 
-      <button id="swapButton">Swap</button>
+      <button id="swapButton" style="margin-top: 20px; padding: 10px 20px; background-color: #00cc99; color: white; border: none; border-radius: 5px; cursor: pointer;">Swap</button>
     </div>
   </div>
-</body>
 
+  <script src="script.js"></script>
+</body>
+</html>
