@@ -1,188 +1,126 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>OnlyCoin Swap</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0d0d0d;
-            color: #fff;
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            padding: 20px;
-        }
-        .connect-wallet {
-            background-color: #1e1e1e;
-            color: #fff;
-            padding: 10px 20px;
-            border: 1px solid #444;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .title {
-            text-align: center;
-            font-size: 48px;
-            color: red;
-            text-shadow: 0 0 10px red, 0 0 20px red;
-            margin-top: 20px;
-        }
-        .swap-card {
-            background-color: #1e1e1e;
-            max-width: 400px;
-            margin: 40px auto;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px #000;
-        }
-        .swap-card h2 {
-            margin: 0 0 20px 0;
-            font-size: 24px;
-        }
-        .swap-section {
-            margin-bottom: 20px;
-        }
-        .swap-label {
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        .swap-input {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #2a2a2a;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .swap-input input {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 18px;
-            width: 100px;
-        }
-        .swap-input span {
-            font-size: 16px;
-        }
-        .usd-value {
-            font-size: 12px;
-            color: #aaa;
-            margin-top: 5px;
-        }
-        .switch-button {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .switch-button button {
-            background-color: #333;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .price-info {
-            font-size: 14px;
-            color: #ccc;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .swap-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        @media (max-width: 500px) {
-            .title {
-                font-size: 32px;
-            }
-            .swap-card {
-                margin: 20px;
-                padding: 15px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnlySwap</title>
+    <img src="./images/neononlycoin.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+      background-image: url('./images/silhouette.png');
+      background-size: cover;
+      background-position: center;
+    }
+    .container {
+      max-width: 400px;
+      margin: 100px auto;
+      background-color: #1c1c1c;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+    .header {
+      text-align: center;
+      font-size: 40px;
+      color: red;
+      font-weight: bold;
+      text-shadow: 0 0 10px red;
+    }
+    .connect-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #2b2b2b;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+    }
+    .swap-box {
+      margin-top: 40px;
+    }
+    .swap-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .swap-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2e2e2e;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .swap-row img {
+      width: 24px;
+      height: 24px;
+      margin-left: 10px;
+    }
+    .price-info {
+      font-size: 12px;
+      color: #bbb;
+      text-align: left;
+      margin: 10px 0 20px 5px;
+    }
+    .swap-btn {
+      width: 100%;
+      padding: 15px;
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      width: 80%;
+    }
+    input:focus {
+      outline: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <div class="connect-wallet" onclick="connectWallet()">Connect Wallet</div>
+  <button class="connect-btn">Connect Wallet</button>
+  <div class="header">OnlyCoin</div>
+  <div class="container">
+    <div class="swap-box">
+      <div class="swap-title">Swap</div>
+      <div class="swap-row">
+        <input type="text" value="0.1">
+        <div style="display:flex; align-items:center;">
+          <img src="./images/bnb.png" alt="BNB">
+          <span style="margin-left:5px;">BNB</span>
+        </div>
+      </div>
+      <div class="price-info">&#8776; $57.32</div>
+      <div style="text-align:center; margin-bottom: 20px;">
+        <span style="font-size: 20px;">&#8645;</span>
+      </div>
+      <div class="swap-row">
+        <input type="text" value="5000">
+        <div style="display:flex; align-items:center;">
+          <img src="./images/logo.png" alt="ONLY">
+          <span style="margin-left:5px;">ONLY</span>
+        </div>
+      </div>
+      <div class="price-info">Price: 0.00002 BNB per ONLY</div>
+      <button class="swap-btn">Swap</button>
     </div>
-    <div class="title">OnlyCoin</div>
-    <div class="swap-card">
-        <h2>Swap</h2>
-        <div class="swap-section">
-            <div class="swap-label">From</div>
-            <div class="swap-input">
-                <input type="text" value="0.1">
-                <span>BNB</span>
-            </div>
-            <div class="usd-value">≈ $57.32</div>
-        </div>
-        <div class="switch-button">
-            <button onclick="switchTokens()">⇅</button>
-        </div>
-        <div class="swap-section">
-            <div class="swap-label">To</div>
-            <div class="swap-input">
-                <input type="text" value="5000">
-                <span>ONLY</span>
-            </div>
-        </div>
-        <div class="price-info">Price: 0.00002 BNB per ONLY</div>
-        <button class="swap-btn" onclick="swapTokens()">Swap</button>
-    </div>
-
-    <script>
-        async function connectWallet() {
-            if (window.ethereum) {
-                try {
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    await provider.send("eth_requestAccounts", []);
-                    const signer = provider.getSigner();
-                    const address = await signer.getAddress();
-                    document.querySelector('.connect-wallet').innerText = address.slice(0, 6) + '...' + address.slice(-4);
-                } catch (err) {
-                    console.error("Wallet connection failed:", err);
-                }
-            } else {
-                alert("Please install MetaMask!");
-            }
-        }
-
-        function switchTokens() {
-            const inputs = document.querySelectorAll('.swap-input input');
-            const spans = document.querySelectorAll('.swap-input span');
-            const tempValue = inputs[0].value;
-            const tempLabel = spans[0].innerText;
-            inputs[0].value = inputs[1].value;
-            spans[0].innerText = spans[1].innerText;
-            inputs[1].value = tempValue;
-            spans[1].innerText = tempLabel;
-        }
-
-        function swapTokens() {
-            const fromAmount = document.querySelectorAll('.swap-input input')[0].value;
-            const toAmount = document.querySelectorAll('.swap-input input')[1].value;
-            alert(`Swapping ${fromAmount} ${document.querySelectorAll('.swap-input span')[0].innerText} for ${toAmount} ${document.querySelectorAll('.swap-input span')[1].innerText}`);
-        }
-    </script>
+  </div>
 </body>
 </html>
