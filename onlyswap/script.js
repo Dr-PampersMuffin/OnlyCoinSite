@@ -29,6 +29,8 @@ async function connectWallet() {
     await provider.send("eth_requestAccounts", []);
     signer = provider.getSigner();
     document.getElementById("wallet-address").innerText = await signer.getAddress();
+    document.getElementById("connect-btn").innerText = "Connected";
+    document.getElementById("connect-btn").disabled = true;
   } catch (err) {
     console.error("Wallet connect error:", err);
   }
