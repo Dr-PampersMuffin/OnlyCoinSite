@@ -25,6 +25,7 @@ header.banner {
   text-decoration: none;
   font-weight: bold;
   padding: 10px;
+  font-size: 18px; 
   transition: all 0.3s ease-in-out;
   border-bottom: 2px solid transparent;
 }
