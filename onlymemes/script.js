@@ -1,5 +1,3 @@
-import { ethers } from "https://cdn.ethers.io/lib/ethers-5.6.esm.min.js";
-
 const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
 const ABI = [
   "function mintNFT(string memory tokenURI) public"
