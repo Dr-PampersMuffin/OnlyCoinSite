@@ -1,3 +1,4 @@
+
 const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
 const ABI = [
   "function mintNFT(string memory tokenURI) public"
@@ -7,7 +8,7 @@ let provider;
 let signer;
 let contract;
 
-window.addEventListener("DOMContentLoaded", async () => {
+window.addEventListener("DOMContentLoaded", () => {
   const connectBtn = document.getElementById("connectWallet");
   const mintBtn = document.getElementById("mintBtn");
 
