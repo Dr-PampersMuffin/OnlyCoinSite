@@ -3,31 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OnlyMemes Minting dApp</title>
-  <link rel="stylesheet" href="style.css">
+  <title>OnlyMemes Minting</title>
+  <style>
+    body { background-color: #0d0d0d; color: white; font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    input, button { padding: 10px; font-size: 16px; margin: 10px; border-radius: 5px; }
+    button { cursor: pointer; background-color: red; color: white; border: none; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Mint Your OnlyMemes NFT</h1>
-    <button id="connectWalletBtn">Connect Wallet</button>
-    <div class="mint-info">
-      <p>Current ONLY price (USD): <span id="onlyPrice">Loading...</span></p>
-      <p>ONLY required to mint: <span id="onlyRequired">...</span></p>
-    </div>
-    <select id="tokenUriSelector">
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme1.json">OnlyMeme #1</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme2.json">OnlyMeme #2</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme3.json">OnlyMeme #3</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme4.json">OnlyMeme #4</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme5.json">OnlyMeme #5</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme6.json">OnlyMeme #6</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme7.json">OnlyMeme #7</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme8.json">OnlyMeme #8</option>
-      <option value="ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme9.json">OnlyMeme #9</option>
-    </select>
-    <button id="mintBtn">Mint NFT</button>
-    <p id="status"></p>
-  </div>
-  <script type="module" src="script.js"></script>
+  <h1>Mint Your OnlyMemes NFT</h1>
+  <button id="connectWallet">Connect Wallet</button><br/>
+  <input type="text" id="tokenURI" placeholder="Enter Token URI"/><br/>
+  <button id="mintBtn">Mint NFT</button>
+
+  <script type="module" src="./script.js"></script>
 </body>
 </html>
+
