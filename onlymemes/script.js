@@ -10,14 +10,14 @@ let provider;
 let signer;
 let contract;
 
-window.addEventListener("load", async () => {
+window.addEventListener("DOMContentLoaded", () => {
   const connectBtn = document.getElementById("connectWallet");
   const mintBtn = document.getElementById("mintBtn");
 
   connectBtn.addEventListener("click", async () => {
-    if (window.ethereum) {
+    if (typeof window.ethereum !== "undefined") {
       try {
-        provider = new ethers.providers.Web3Provider(window.ethereum);
+        provider = new ethers.providers.Web3Provider(window.ethereum, "any");
         await provider.send("eth_requestAccounts", []);
         signer = provider.getSigner();
         contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
@@ -25,27 +25,36 @@ window.addEventListener("load", async () => {
         const addr = await signer.getAddress();
         connectBtn.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
         connectBtn.disabled = true;
+        console.log("Wallet connected:", addr);
       } catch (err) {
-        alert("Wallet connection failed");
-        console.error(err);
+        console.error("Wallet connection failed", err);
+        alert("Wallet connection failed. Check console for details.");
       }
     } else {
-      alert("MetaMask not detected");
+      alert("MetaMask not detected. Please install it to use this app.");
     }
   });
 
   mintBtn.addEventListener("click", async () => {
     const tokenInput = document.getElementById("tokenURI");
     const uri = tokenInput.value.trim();
-    if (!uri) return alert("Please enter a token URI");
+    if (!uri) {
+      alert("Please enter a token URI");
+      return;
+    }
+
+    if (!contract) {
+      alert("Please connect your wallet first!");
+      return;
+    }
 
     try {
       const tx = await contract.mintNFT(uri);
       await tx.wait();
-      alert("NFT Minted Successfully!");
+      alert("🎉 NFT Minted Successfully!");
     } catch (err) {
-      alert("Minting failed");
-      console.error(err);
+      console.error("Minting failed", err);
+      alert("Minting failed. Check console for details.");
     }
   });
 });
