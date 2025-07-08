@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,12 +24,22 @@
       margin-top: 30px;
       box-shadow: 0 0 15px red;
     }
-    input {
-      width: 80%;
+    .preview-container {
+      margin-top: 20px;
+    }
+    .nft-image {
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px red;
+      margin-top: 10px;
+    }
+    select, input {
       padding: 10px;
       margin: 10px 0;
       border-radius: 5px;
       border: none;
+      font-size: 1em;
+      width: 80%;
     }
     button {
       padding: 10px 20px;
@@ -45,16 +54,124 @@
       background-color: gray;
       cursor: not-allowed;
     }
+    #priceDisplay {
+      margin-top: 15px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h1>OnlyMemes NFT Minting</h1>
   <div class="mint-box">
-    <button id="connectWallet">Connect Wallet</button><br><br>
-    <input id="tokenURI" type="text" placeholder="Enter IPFS Token URI"><br>
+    <button id="connectWallet">Connect Wallet</button><br>
+    <label for="nftSelector">Select NFT:</label><br>
+    <select id="nftSelector">
+      <option value="0">OnlyMeme #1</option>
+      <option value="1">OnlyMeme #2</option>
+      <option value="2">OnlyMeme #3</option>
+      <option value="3">OnlyMeme #4</option>
+      <option value="4">OnlyMeme #5</option>
+      <option value="5">OnlyMeme #6</option>
+      <option value="6">OnlyMeme #7</option>
+      <option value="7">OnlyMeme #8</option>
+      <option value="8">OnlyMeme #9</option>
+    </select>
+
+    <div class="preview-container">
+      <img id="nftPreview" class="nft-image" src="https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme1.png" alt="NFT Preview" />
+    </div>
+
+    <div id="priceDisplay">Fetching ONLY price...</div>
+
+    <input id="tokenURI" type="text" placeholder="Token URI will auto-fill" readonly><br>
     <button id="mintBtn">Mint NFT</button>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="script.js"></script>
+
+  <script type="module">
+    import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
+
+    const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
+    const ABI = [
+      "function mintNFT(string memory tokenURI) public",
+      "function getRequiredOnlyCoinAmount() public view returns (uint256)",
+      "function updateOnlyCoinPriceUSD(uint256 _priceMicroUSD) public"
+    ];
+
+    let provider;
+    let signer;
+    let contract;
+
+    const connectBtn = document.getElementById("connectWallet");
+    const mintBtn = document.getElementById("mintBtn");
+    const selector = document.getElementById("nftSelector");
+    const preview = document.getElementById("nftPreview");
+    const priceDisplay = document.getElementById("priceDisplay");
+    const uriInput = document.getElementById("tokenURI");
+
+    const baseTokenUri = "https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/";
+    const jsonUris = [
+      "onlymeme1.json", "onlymeme2.json", "onlymeme3.json",
+      "onlymeme4.json", "onlymeme5.json", "onlymeme6.json",
+      "onlymeme7.json", "onlymeme8.json", "onlymeme9.json"
+    ];
+    const imageUris = [
+      "onlymeme1.png", "onlymeme2.png", "onlymeme3.png",
+      "onlymeme4.png", "onlymeme5.png", "onlymeme6.png",
+      "onlymeme7.png", "onlymeme8.png", "onlymeme9.png"
+    ];
+
+    selector.addEventListener("change", (e) => {
+      const i = parseInt(e.target.value);
+      preview.src = baseTokenUri + imageUris[i];
+      uriInput.value = baseTokenUri + jsonUris[i];
+    });
+
+    async function fetchOnlyPrice() {
+      try {
+        const res = await fetch("https://api.geckoterminal.com/api/v2/networks/bsc/tokens/0xc0912c990fe376Bc74776b79BAf28456dAdDC055");
+        const data = await res.json();
+        const price = parseFloat(data.data.attributes.price_usd).toFixed(6);
+        priceDisplay.innerText = `Current ONLY price: $${price} USD`;
+      } catch (e) {
+        priceDisplay.innerText = "Unable to fetch ONLY price.";
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      fetchOnlyPrice();
+
+      connectBtn.addEventListener("click", async () => {
+        if (window.ethereum) {
+          try {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            signer = provider.getSigner();
+            contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+            const addr = await signer.getAddress();
+            connectBtn.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
+            connectBtn.disabled = true;
+          } catch (err) {
+            alert("Connection failed");
+            console.error(err);
+          }
+        } else {
+          alert("MetaMask not detected");
+        }
+      });
+
+      mintBtn.addEventListener("click", async () => {
+        const uri = uriInput.value;
+        if (!uri) return alert("Token URI missing");
+        try {
+          const tx = await contract.mintNFT(uri);
+          await tx.wait();
+          alert("NFT Minted Successfully!");
+        } catch (err) {
+          alert("Minting failed");
+          console.error(err);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
