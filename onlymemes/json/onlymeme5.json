@@ -1,15 +1,15 @@
 {
-  "name": "OnlyMeme #1",
+  "name": "OnlyMeme #5",
   "description": "An exclusive NFT from the OnlyMemes collection. Holding this grants special perks in the OnlyCoin ecosystem.",
-  "image": "ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme1.png",
+  "image": "ipfs://bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme5.png",
   "attributes": [
     {
       "trait_type": "Staking Boost",
-      "value": "5%"
+      "value": "25%"
     },
     {
       "trait_type": "Rarity",
-      "value": "Legendary"
+      "value": "Common"
     }
   ]
 }
