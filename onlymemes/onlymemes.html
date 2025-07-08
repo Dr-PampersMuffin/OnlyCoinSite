@@ -126,16 +126,17 @@
       uriInput.value = baseTokenUri + jsonUris[i];
     });
 
-    async function fetchOnlyPrice() {
-      try {
-        const res = await fetch("https://api.geckoterminal.com/api/v2/networks/bsc/tokens/0xc0912c990fe376Bc74776b79BAf28456dAdDC055");
-        const data = await res.json();
-        const price = parseFloat(data.data.attributes.price_usd).toFixed(6);
-        priceDisplay.innerText = `Current ONLY price: $${price} USD`;
-      } catch (e) {
-        priceDisplay.innerText = "Unable to fetch ONLY price.";
-      }
-    }
+   async function fetchOnlyPrice() {
+  try {
+    const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a");
+    const data = await res.json();
+    const price = parseFloat(data.pair.priceUsd).toFixed(6);
+    priceDisplay.innerText = `Current ONLY price: $${price} USD`;
+  } catch (e) {
+    priceDisplay.innerText = "Unable to fetch ONLY price.";
+    console.error("DEXScreener fetch error:", e);
+  }
+}
 
     window.addEventListener("DOMContentLoaded", async () => {
       fetchOnlyPrice();
