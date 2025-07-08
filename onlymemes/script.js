@@ -34,6 +34,8 @@ window.addEventListener("DOMContentLoaded", () => {
       const address = await signer.getAddress();
       connectBtn.textContent = `Connected: ${address.slice(0, 6)}...${address.slice(-4)}`;
       connectBtn.disabled = true;
+      const amountNeeded = await contract.getRequiredOnlyCoinAmount();
+      priceDisplay.innerText = `Minting costs ~${ethers.utils.formatUnits(amountNeeded, 18)} ONLY (~$10)`;
 
       console.log("✅ Wallet connected:", address);
 
