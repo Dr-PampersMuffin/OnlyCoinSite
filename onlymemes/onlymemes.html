@@ -1,61 +1,153 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OnlyMemes Minting</title>
   <style>
     body {
-      background-color: #0d0d0d;
-      color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px;
-    }
-    h1 {
-      color: red;
-      text-shadow: 0 0 10px red;
-    }
-    .mint-box {
-      background-color: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
-      display: inline-block;
-      margin-top: 30px;
-      box-shadow: 0 0 15px red;
-    }
-    input {
-      width: 80%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: none;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: red;
+      background: #111;
       color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
     }
-    button:disabled {
-      background-color: gray;
-      cursor: not-allowed;
+    .preview-container {
+      margin-top: 1rem;
+    }
+    .nft-image {
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px red;
+    }
+    .controls {
+      margin-top: 2rem;
+    }
+    select, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+    #priceDisplay {
+      margin-top: 1rem;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>OnlyMemes NFT Minting</h1>
-  <div class="mint-box">
-    <button id="connectWallet">Connect Wallet</button><br><br>
-    <input id="tokenURI" type="text" placeholder="Enter IPFS Token URI"><br>
+  <h1>Mint Your OnlyMemes NFT</h1>
+
+  <button id="connectWallet">Connect Wallet</button>
+
+  <div class="controls">
+    <label for="nftSelector">Select NFT:</label>
+    <select id="nftSelector">
+      <option value="0">OnlyMeme #1</option>
+      <option value="1">OnlyMeme #2</option>
+      <option value="2">OnlyMeme #3</option>
+      <option value="3">OnlyMeme #4</option>
+      <option value="4">OnlyMeme #5</option>
+      <option value="5">OnlyMeme #6</option>
+      <option value="6">OnlyMeme #7</option>
+      <option value="7">OnlyMeme #8</option>
+      <option value="8">OnlyMeme #9</option>
+    </select>
+
+    <div class="preview-container">
+      <img id="nftPreview" class="nft-image" src="https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymeme1.png" alt="NFT Preview" />
+    </div>
+
+    <div id="priceDisplay">Fetching ONLY price...</div>
+
     <button id="mintBtn">Mint NFT</button>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="script.js"></script>
+
+  <script type="module">
+    import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
+
+    const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
+    const ABI = [
+      "function mintNFT(string memory tokenURI) public",
+      "function getRequiredOnlyCoinAmount() public view returns (uint256)",
+      "function updateOnlyCoinPriceUSD(uint256 _priceMicroUSD) public"
+    ];
+
+    let provider;
+    let signer;
+    let contract;
+
+    const connectBtn = document.getElementById("connectWallet");
+    const mintBtn = document.getElementById("mintBtn");
+    const selector = document.getElementById("nftSelector");
+    const preview = document.getElementById("nftPreview");
+    const priceDisplay = document.getElementById("priceDisplay");
+
+    const baseTokenUri = "https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/";
+    const jsonUris = [
+      "0.json", "1.json", "2.json", "3.json", "4.json",
+      "5.json", "6.json", "7.json", "8.json"
+    ];
+    const imageUris = [
+      "onlymeme1.png", "onlymeme2.png", "onlymeme3.png",
+      "onlymeme4.png", "onlymeme5.png", "onlymeme6.png",
+      "onlymeme7.png", "onlymeme8.png", "onlymeme9.png"
+    ];
+
+    selector.addEventListener("change", (e) => {
+      const i = parseInt(e.target.value);
+      preview.src = baseTokenUri + imageUris[i];
+    });
+
+    async function fetchOnlyPrice() {
+      try {
+        // Fetch live price from DEXTools or API
+        const res = await fetch("https://api.geckoterminal.com/api/v2/networks/bsc/tokens/0xc0912c990fe376Bc74776b79BAf28456dAdDC055");
+        const data = await res.json();
+        const price = parseFloat(data.data.attributes.price_usd).toFixed(6);
+        priceDisplay.innerText = `Current ONLY price: $${price} USD`;
+      } catch (e) {
+        priceDisplay.innerText = "Unable to fetch ONLY price.";
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      fetchOnlyPrice();
+
+      connectBtn.addEventListener("click", async () => {
+        if (window.ethereum) {
+          try {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            signer = provider.getSigner();
+            contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+            const addr = await signer.getAddress();
+            connectBtn.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
+            connectBtn.disabled = true;
+          } catch (err) {
+            alert("Connection failed");
+            console.error(err);
+          }
+        } else {
+          alert("MetaMask not detected");
+        }
+      });
+
+      mintBtn.addEventListener("click", async () => {
+        const i = parseInt(selector.value);
+        const tokenURI = baseTokenUri + jsonUris[i];
+        try {
+          const tx = await contract.mintNFT(tokenURI);
+          await tx.wait();
+          alert("NFT Minted Successfully!");
+        } catch (err) {
+          alert("Minting failed");
+          console.error(err);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
    
