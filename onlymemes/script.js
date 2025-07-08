@@ -1,14 +1,16 @@
-
 const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
+
 const ABI = [
-  "function mintNFT(string memory tokenURI) public"
+  "function mintNFT(string memory tokenURI) public",
+  "function getRequiredOnlyCoinAmount() public view returns (uint256)",
+  "function updateOnlyCoinPriceUSD(uint256 _priceMicroUSD) public"
 ];
 
 let provider;
 let signer;
 let contract;
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", async () => {
   const connectBtn = document.getElementById("connectWallet");
   const mintBtn = document.getElementById("mintBtn");
 
@@ -35,7 +37,7 @@ window.addEventListener("DOMContentLoaded", () => {
   mintBtn.addEventListener("click", async () => {
     const tokenInput = document.getElementById("tokenURI");
     const uri = tokenInput.value.trim();
-    if (!uri) return alert("Please enter token URI");
+    if (!uri) return alert("Please enter a token URI");
 
     try {
       const tx = await contract.mintNFT(uri);
