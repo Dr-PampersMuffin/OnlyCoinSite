@@ -1,19 +1,19 @@
-let provider;
-let signer;
-let router;
+window.addEventListener("DOMContentLoaded", () => {
+  const connectButton = document.getElementById('connectWallet');
 
-window.addEventListener("DOMContentLoaded", async () => {
-  if (window.ethereum) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    router = new ethers.Contract(ROUTER_ADDRESS, abi, provider);
-
-    document.getElementById("connect-btn").addEventListener("click", async () => {
+  connectButton.addEventListener('click', async () => {
+    if (typeof window.ethereum !== 'undefined') {
       try {
-        await provider.send("eth_requestAccounts", []);
-        signer = provider.getSigner();
-        const address = await signer.getAddress();
-        document.getElementById("wallet-address").innerText = address;
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const selectedAccount = accounts[0];
+        connectWallet.innerText = `Connected: ${selectedAccount.slice(0, 6)}...${selectedAccount.slice(-4)}`;
+        connectWallet.disabled = true;
+        console.log("Connected to:", selectedAccount);
       } catch (err) {
-        console.error("Wallet connect error:", err);
+        console.error("User rejected the connection:", err);
       }
-    });
+    } else {
+      alert("MetaMask not detected. Please install MetaMask.");
+    }
+  });
+});
