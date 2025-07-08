@@ -30,8 +30,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     signer = provider.getSigner();
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     const addr = await signer.getAddress();
-    connectBtn.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
-    connectBtn.disabled = true;
+    connectWallet.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
+    connectWallet.disabled = true;
 
     // Optional: switch to Ethereum mainnet
     try {
