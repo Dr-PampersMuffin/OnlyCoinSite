@@ -1,19 +1,17 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const connectButton = document.getElementById('connectWallet');
+window.addEventListener("DOMContentLoaded", async () => {
+  const connectBtn = document.getElementById("connectWallet");
 
-  connectButton.addEventListener('click', async () => {
-    if (typeof window.ethereum !== 'undefined') {
+  connectBtn.addEventListener("click", async () => {
+    if (typeof window.ethereum !== "undefined") {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const selectedAccount = accounts[0];
-        connectWallet.innerText = `Connected: ${selectedAccount.slice(0, 6)}...${selectedAccount.slice(-4)}`;
-        connectWallet.disabled = true;
-        console.log("Connected to:", selectedAccount);
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        console.log("Connected account:", accounts[0]);
+        connectBtn.innerText = `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
       } catch (err) {
-        console.error("User rejected the connection:", err);
+        console.error("Connection failed:", err);
       }
     } else {
-      alert("MetaMask not detected. Please install MetaMask.");
+      alert("MetaMask not found");
     }
   });
 });
