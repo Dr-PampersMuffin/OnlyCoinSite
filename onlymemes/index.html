@@ -1,51 +1,39 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OnlyMemes Minting</title>
+  <title>OnlyMemes Mint</title>
+  <script src="https://cdn.ethers.io/lib/ethers-5.6.umd.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #fff;
-      margin: 0;
-      padding: 0;
+      background-color: #111;
+      color: white;
+      font-family: sans-serif;
       text-align: center;
-    }
-    .container {
-      margin-top: 50px;
-    }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      margin: 10px;
-      border-radius: 8px;
-      border: none;
+      padding: 40px;
     }
     input {
       width: 300px;
+      padding: 10px;
+      margin: 10px 0;
     }
     button {
-      background-color: crimson;
+      padding: 10px 20px;
+      background: red;
       color: white;
+      border: none;
       cursor: pointer;
-    }
-    button:disabled {
-      background-color: grey;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>OnlyMemes NFT Minting</h1>
-    <button id="connectWallet">Connect Wallet</button><br>
-    <input id="tokenURI" placeholder="Enter IPFS Token URI"><br>
-    <button id="mintBtn">Mint NFT</button>
-  </div>
+  <h1>OnlyMemes NFT Mint</h1>
+  <button id="connectWallet">Connect Wallet</button><br><br>
+  <input id="tokenURI" placeholder="Enter IPFS Token URI" /><br>
+  <button id="mintBtn">Mint NFT</button>
 
-  <script src="https://cdn.ethers.io/lib/ethers-5.6.umd.min.js"></script>
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
