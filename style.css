@@ -11,16 +11,6 @@ header.banner {
   background-color: #000;
   opacity: 1;
 }
-
-@keyframes neonGlow {
-  0%, 100% {
-    text-shadow: 0 0 5px red, 0 0 10px red, 0 0 20px red, 0 0 40px red;
-  }
-  50% {
-    text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 50px red;
-  }
-}
-
 .nav-animated {
   display: flex;
   justify-content: center;
