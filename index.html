@@ -40,8 +40,6 @@
 </head>
 <body style="font-family:Arial,sans-serif;margin:0;padding:0;background-color:#000;color:#333;">
     <div id="splash">
-        <!-- Neon glowing text -->
-  <div class="neon-element">
         <h1>Welcome to OnlyCoin</h1>
         <p>Loading the future of memecoins...</p>
     </div>
@@ -52,10 +50,26 @@
 <header>
   <img src="images/onlybanner-red.png" alt="OnlyCoin Banner" style="width:100%; height:auto; display:block; margin:0 auto;"/>
 </header>
-
+    
 <link href="style.css" rel="stylesheet"/>
 <style>
-
+   #news-ticker {
+      width: 100%;
+      overflow: hidden;
+      background: #111;
+      color: #ff4d4d;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    #news-ticker p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker 30s linear infinite;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
   </style>
 </head>
 <body>
