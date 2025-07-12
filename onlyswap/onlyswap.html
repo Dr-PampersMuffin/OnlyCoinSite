@@ -9,7 +9,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #0d0d0d;
-      background-image: url('images/silhouette.png');
+      background-image: url('images/silhouette.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -82,7 +82,7 @@
   <button class="connect-btn" id="connect-btn">Connect Wallet</button>
   <div id="wallet-address" style="text-align: right; padding: 10px 20px; font-size: 0.9em;"></div>
 
-  <div class="header">OnlySwap</div>
+  <div class="header">OnlyCoin</div>
   <div class="swap-container">
     <div class="swap-title">Swap</div>
 
@@ -98,7 +98,7 @@
       <span><img src="images/logo.png" alt="OnlyCoin"> ONLY</span>
     </div>
 
-    <div class="price-info" id="onlycoin-price">Price: Loading...</div>
+    <div class="price-info">Price: ~ live via PancakeSwap</div>
     <button id="swap-btn" class="swap-btn">Swap</button>
   </div>
 
@@ -181,49 +181,6 @@
         alert("MetaMask not detected. Please install it to use OnlySwap.");
       }
     });
-    https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js
-<script>
-  const web3 = new Web3("https://bsc-dataseed1.binance.org/");
-  const routerAbi = [{
-    "inputs": [
-      {"internalType": "uint256", "name": "amountIn", "type": "uint256"},
-      {"internalType": "address[]", "name": "path", "type": "address[]"}
-    ],
-    "name": "getAmountsOut",
-    "outputs": [{"internalType": "uint256[]", "name": "amounts", "type": "uint256[]"}],
-    "stateMutability": "view",
-    "type": "function"
-  }];
-  const tokenAbi = [{
-    "inputs": [],
-    "name": "decimals",
-    "outputs": [{"internalType": "uint8", "name": "", "type": "uint8"}],
-    "stateMutability": "view",
-    "type": "function"
-  }];
-
-  const routerAddress = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
-  const onlyCoinAddress = "0xc0912c990fe376bc74776b79baf28456daddc055";
-  const usdtAddress = "0x55d398326f99059fF775485246999027B3197955";
-
-  fetchOnlyCoinPrice() {
-    const router = new web3.eth.Contract(routerAbi, routerAddress);
-    const token = new web3.eth.Contract(tokenAbi, onlyCoinAddress);
-    const decimals = await token.methods.decimals().call();
-    const amountIn = web3.utils.toBN(10).pow(web3.utils.toBN(decimals)); // 1 token
-
-    try {
-      const amounts = await router.methods.getAmountsOut(amountIn, [onlyCoinAddress, usdtAddress]).call();
-      const price = web3.utils.fromWei(amounts[1], 'ether');
-      document.getElementById("onlycoin-price").innerText = `Price: $${parseFloat(price).toFixed(6)} per ONLY`;
-    } catch (err) {
-      document.getElementById("onlycoin-price").innerText = "Price: Unavailable";
-      console.error("Error fetching price:", err);
-    }
-  }
-
-  fetchOnlyCoinPrice();
-  setInterval(fetchOnlyCoinPrice, 30000); // refresh every 30 seconds
   </script>
 </body>
 </html>
