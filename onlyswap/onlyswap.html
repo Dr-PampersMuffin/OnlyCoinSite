@@ -7,67 +7,57 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0f0f0f;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #0d0d0d;
+      background-image: url('images/silhouette.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: white;
     }
-    .navbar {
-      width: 100%;
-      padding: 20px;
-      background-color: #1a1a1a;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #333;
-    }
-    .navbar h1 {
-      color: #ff4d4d;
-      font-weight: bold;
-    }
-    .connect-btn {
-      background: #ff4d4d;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .swap-panel {
-      margin-top: 50px;
-      width: 100%;
-      max-width: 480px;
-      background: #1c1c1c;
-      border-radius: 16px;
+    .header {
+      text-align: center;
       padding: 30px;
-      box-shadow: 0 0 30px rgba(255, 77, 77, 0.2);
+      font-size: 2.5em;
+      color: red;
+      font-weight: bold;
+      text-shadow: 0 0 10px red;
     }
-    .token-row {
-      background: #2a2a2a;
-      padding: 16px;
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .swap-container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 10px #ff0000;
+    }
+    .swap-title {
+      font-size: 1.5em;
       margin-bottom: 20px;
     }
-    .token-row input {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 1.2em;
-      width: 70%;
+    .token-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #333;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 10px 0;
     }
-    .token-row span {
-      font-weight: bold;
+    .token-box img {
+      height: 30px;
+      margin-left: 10px;
+    }
+    .price-info {
+      text-align: left;
+      color: #ccc;
+      font-size: 0.9em;
+      margin-top: 10px;
     }
     .swap-btn {
       width: 100%;
       padding: 15px;
-      background: #ff4d4d;
+      background: red;
       border: none;
       color: white;
       font-size: 1.2em;
@@ -75,33 +65,41 @@
       cursor: pointer;
       margin-top: 20px;
     }
-    .price-info {
-      margin-top: 10px;
-      text-align: center;
-      font-size: 0.9em;
-      color: #ccc;
+    .connect-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 </head>
 <body>
-  <div class="navbar">
-    <h1>OnlySwap</h1>
-    <button class="connect-btn" id="connect-btn">Connect Wallet</button>
-  </div>
-  <div id="wallet-address" style="margin-top: 10px; font-size: 0.9em;"></div>
+  <button class="connect-btn" id="connect-btn">Connect Wallet</button>
+  <div id="wallet-address" style="text-align: right; padding: 10px 20px; font-size: 0.9em;"></div>
 
-  <div class="swap-panel">
-    <div class="token-row">
-      <input type="number" id="bnb-input" placeholder="Enter BNB">
-      <span>BNB</span>
+  <div class="header">OnlySwap</div>
+  <div class="swap-container">
+    <div class="swap-title">Swap</div>
+
+    <div class="token-box">
+      <input type="number" id="bnb-input" placeholder="Enter BNB" style="width: 60%; padding: 8px;">
+      <span><img src="images/BNB.png" alt="bnb"> BNB</span>
     </div>
-    <div class="token-row">
-      <input type="text" id="only-output" placeholder="Estimated ONLY" readonly>
-      <span>ONLY</span>
+
+    <div style="text-align: center; margin: 10px 0;">⇅</div>
+
+    <div class="token-box">
+      <input type="text" id="only-output" placeholder="Estimated ONLY" readonly style="width: 60%; padding: 8px;">
+      <span><img src="images/logo.png" alt="OnlyCoin"> ONLY</span>
     </div>
+
     <div class="price-info" id="priceDisplay">Fetching ONLY price...</div>
-    <button class="swap-btn" id="swap-btn">Swap</button>
+    <button id="swap-btn" class="swap-btn">Swap</button>
   </div>
 
   <script>
@@ -118,21 +116,7 @@
     let signer;
     let router;
 
-    async function fetchOnlyPrice() {
-      try {
-        const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a');
-        const data = await response.json();
-        const price = data?.pair?.priceUsd;
-        document.getElementById('priceDisplay').innerText = `1 ONLY ≈ $${parseFloat(price).toFixed(4)}`;
-      } catch (error) {
-        document.getElementById('priceDisplay').innerText = 'Error fetching price';
-      }
-    }
-
     window.addEventListener("DOMContentLoaded", async () => {
-      fetchOnlyPrice();
-      setInterval(fetchOnlyPrice, 30000);
-
       if (typeof window.ethereum !== "undefined") {
         provider = new ethers.providers.Web3Provider(window.ethereum);
         router = new ethers.Contract(ROUTER_ADDRESS, abi, provider);
@@ -145,6 +129,7 @@
             document.getElementById("wallet-address").innerText =
               "Connected: " + address.slice(0, 6) + "..." + address.slice(-4);
             document.getElementById("connect-btn").disabled = true;
+            console.log("Wallet connected:", address);
           } catch (err) {
             console.error("User denied connection:", err);
           }
@@ -163,6 +148,7 @@
             const onlyAmount = ethers.utils.formatUnits(amountsOut[1], 18);
             document.getElementById("only-output").value = onlyAmount;
           } catch (err) {
+            console.error("Price fetch error:", err);
             document.getElementById("only-output").value = "Error";
           }
         });
@@ -187,6 +173,7 @@
             await tx.wait();
             alert("Swap successful!");
           } catch (err) {
+            console.error("Swap error:", err);
             alert("Swap failed: " + err.message);
           }
         });
@@ -195,5 +182,20 @@
       }
     });
   </script>
+  <script>
+  async function fetchOnlyPrice() {
+    try {
+      const response = await fetch('https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a');
+      const data = await response.json();
+      const price = data?.pair?.priceUsd;
+      document.getElementById('priceDisplay').innerText = `1 ONLY ≈ $${parseFloat(price).toFixed(4)}`;
+    } catch (error) {
+      document.getElementById('priceDisplay').innerText = 'Error fetching price';
+    }
+  }
+
+  fetchOnlyPrice();
+  setInterval(fetchOnlyPrice, 30000); // update every 30s
+</script>
 </body>
 </html>
