@@ -91,15 +91,20 @@
     import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
 
     const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
-    const ABI = [
+    const ONLY_ADDRESS = "0xC0912c990fe376Bc74776b79BAf28456dAdDC055"; // OnlyCoin address
+    const MINT_COST = ethers.utils.parseUnits("10", 18); // 10 ONLY
+
+    const NFT_ABI = [
       "function mintNFT(string memory tokenURI) public",
-      "function getRequiredOnlyCoinAmount() public view returns (uint256)",
-      "function updateOnlyCoinPriceUSD(uint256 _priceMicroUSD) public"
+      "function getRequiredOnlyCoinAmount() public view returns (uint256)"
     ];
 
-    let provider;
-    let signer;
-    let contract;
+    const ONLY_ABI = [
+      "function approve(address spender, uint256 amount) public returns (bool)",
+      "function allowance(address owner, address spender) public view returns (uint256)"
+    ];
+
+    let provider, signer, nftContract, onlyToken;
 
     const connectBtn = document.getElementById("connectWallet");
     const mintBtn = document.getElementById("mintBtn");
@@ -109,7 +114,7 @@
     const uriInput = document.getElementById("tokenURI");
 
     const baseTokenUri = "https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/";
-     const jsonUris = [
+    const jsonUris = [
       "onlymeme1.json", "onlymeme2.json", "onlymeme3.json",
       "onlymeme4.json", "onlymeme5.json", "onlymeme6.json",
       "onlymeme7.json", "onlymeme8.json", "onlymeme9.json"
@@ -126,17 +131,17 @@
       uriInput.value = baseTokenUri + jsonUris[i];
     });
 
-   async function fetchOnlyPrice() {
-  try {
-    const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a");
-    const data = await res.json();
-    const price = parseFloat(data.pair.priceUsd).toFixed(6);
-    priceDisplay.innerText = `Current ONLY price: $${price} USD`;
-  } catch (e) {
-    priceDisplay.innerText = "Unable to fetch ONLY price.";
-    console.error("DEXScreener fetch error:", e);
-  }
-}
+    async function fetchOnlyPrice() {
+      try {
+        const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a");
+        const data = await res.json();
+        const price = parseFloat(data.pair.priceUsd).toFixed(6);
+        priceDisplay.innerText = `Current ONLY price: $${price} USD`;
+      } catch (e) {
+        priceDisplay.innerText = "Unable to fetch ONLY price.";
+        console.error("DEXScreener fetch error:", e);
+      }
+    }
 
     window.addEventListener("DOMContentLoaded", async () => {
       fetchOnlyPrice();
@@ -147,7 +152,8 @@
             provider = new ethers.providers.Web3Provider(window.ethereum);
             await provider.send("eth_requestAccounts", []);
             signer = provider.getSigner();
-            contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+            nftContract = new ethers.Contract(CONTRACT_ADDRESS, NFT_ABI, signer);
+            onlyToken = new ethers.Contract(ONLY_ADDRESS, ONLY_ABI, signer);
             const addr = await signer.getAddress();
             connectBtn.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
             connectBtn.disabled = true;
@@ -163,13 +169,25 @@
       mintBtn.addEventListener("click", async () => {
         const uri = uriInput.value;
         if (!uri) return alert("Token URI missing");
+
         try {
-          const tx = await contract.mintNFT(uri);
+          const userAddress = await signer.getAddress();
+          const allowance = await onlyToken.allowance(userAddress, CONTRACT_ADDRESS);
+
+          if (allowance.lt(MINT_COST)) {
+            const approvalTx = await onlyToken.approve(CONTRACT_ADDRESS, MINT_COST);
+            await approvalTx.wait();
+            console.log("Approved ONLY for minting.");
+          }
+
+          console.log("Minting:", uri);
+          const tx = await nftContract.mintNFT(uri);
+          console.log("Tx hash:", tx.hash);
           await tx.wait();
-          alert("NFT Minted Successfully!");
+          alert("✅ NFT Minted Successfully!");
         } catch (err) {
-          alert("Minting failed");
-          console.error(err);
+          console.error("Minting failed:", err);
+          alert("Minting failed: " + (err?.data?.message || err?.message || "Unknown error"));
         }
       });
     });
