@@ -1015,7 +1015,7 @@
         player1 = { x: 200, y: 500, action: "idle", frame: 0 };
         player2 = { x: 600, y: 500, action: "idle", frame: 0 };
         enemy = { x: 700, y: 500, action: "idle", frame: 0 };
-        socket = io("https://your-websocket-server.com");
+        socket = io("http://localhost:3000");
         socket.on("opponent-move", (data) => {
           player2.x = data.x;
           player2.action = data.action;
