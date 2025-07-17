@@ -93,7 +93,7 @@
 
     const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
     const ONLY_ADDRESS = "0xC0912c990fe376Bc74776b79BAf28456dAdDC055"; // OnlyCoin address
-    const MINT_COST = ethers.utils.parseUnits("10", 18); // 10 ONLY
+    const USD_COST = 10; // 10 USD target
 
     const NFT_ABI = [
       "function mintNFT(string memory tokenURI) public payable",
@@ -106,7 +106,7 @@
       "function balanceOf(address account) public view returns (uint256)"
     ];
 
-    let provider, signer, nftContract, onlyToken;
+    let provider, signer, nftContract, onlyToken, onlyPrice = 0;
 
     const connectBtn = document.getElementById("connectWallet");
     const mintBtn = document.getElementById("mintBtn");
@@ -137,16 +137,20 @@
       try {
         const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a");
         const data = await res.json();
-        const price = parseFloat(data.pair.priceUsd).toFixed(6);
-        priceDisplay.innerText = `Current ONLY price: $${price} USD`;
+        onlyPrice = parseFloat(data.pair.priceUsd) || 1; // Default to 1 if fetch fails
+        const requiredAmount = (USD_COST / onlyPrice).toFixed(6);
+        const mintCost = ethers.utils.parseUnits(requiredAmount, 18);
+        priceDisplay.innerText = `Current ONLY price: $${onlyPrice.toFixed(6)} USD | Mint Cost: ${requiredAmount} ONLY (~$${USD_COST})`;
+        return mintCost;
       } catch (e) {
-        priceDisplay.innerText = "Unable to fetch ONLY price.";
+        priceDisplay.innerText = "Unable to fetch ONLY price. Using default: $1. Mint Cost: 10 ONLY.";
         console.error("DEXScreener fetch error:", e);
+        return ethers.utils.parseUnits("10", 18); // Fallback to 10 OCT if price fetch fails
       }
     }
 
     window.addEventListener("DOMContentLoaded", async () => {
-      fetchOnlyPrice();
+      const mintCost = await fetchOnlyPrice();
 
       connectBtn.addEventListener("click", async () => {
         if (window.ethereum) {
@@ -175,19 +179,21 @@
         try {
           const userAddress = await signer.getAddress();
           const balance = await onlyToken.balanceOf(userAddress);
-          if (balance.lt(MINT_COST)) {
-            return alert("Insufficient OnlyCoin balance. You need at least 10 ONLY!");
+          const mintCost = await fetchOnlyPrice(); // Recalculate for accuracy
+          if (balance.lt(mintCost)) {
+            const requiredUSD = ethers.utils.formatUnits(mintCost.mul(onlyPrice).div(ethers.utils.parseUnits("1", 18)), 18);
+            return alert(`Insufficient OnlyCoin balance. You need at least ${ethers.utils.formatUnits(mintCost, 18)} ONLY (~$${requiredUSD.toFixed(2)} USD)!`);
           }
 
           const allowance = await onlyToken.allowance(userAddress, CONTRACT_ADDRESS);
-          if (allowance.lt(MINT_COST)) {
-            const approvalTx = await onlyToken.approve(CONTRACT_ADDRESS, MINT_COST);
+          if (allowance.lt(mintCost)) {
+            const approvalTx = await onlyToken.approve(CONTRACT_ADDRESS, mintCost);
             await approvalTx.wait();
-            console.log("Approved 10 ONLY for minting. Tx hash:", approvalTx.hash);
+            console.log("Approved ONLY for minting. Tx hash:", approvalTx.hash);
           }
 
-          console.log("Minting NFT with URI:", uri);
-          const tx = await nftContract.mintNFT(uri, { value: MINT_COST }); // Send 10 ONLY with mint
+          console.log("Minting NFT with URI:", uri, "Cost:", ethers.utils.formatUnits(mintCost, 18), "ONLY");
+          const tx = await nftContract.mintNFT(uri, { value: mintCost }); // Send dynamic OCT amount
           console.log("Minting Tx hash:", tx.hash);
           await tx.wait();
           alert("✅ NFT Minted Successfully! Tx hash: " + tx.hash);
