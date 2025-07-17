@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OnlyMemes Minting</title>
+  <title>OnlyMemes NFT Minting</title>
   <style>
     body {
       background-color: #0d0d0d;
       color: white;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 30px;
+      padding: 20px;
     }
     h1 {
       color: red;
@@ -18,31 +18,32 @@
     }
     .mint-box {
       background-color: #1a1a1a;
-      padding: 20px;
+      padding: 15px;
       border-radius: 12px;
       display: inline-block;
-      margin-top: 30px;
+      margin-top: 20px;
       box-shadow: 0 0 15px red;
+      max-width: 90%;
     }
     .preview-container {
-      margin-top: 20px;
+      margin-top: 15px;
     }
     .nft-image {
-      max-width: 300px;
+      max-width: 200px;
       border-radius: 10px;
       box-shadow: 0 0 10px red;
       margin-top: 10px;
     }
     select, input {
-      padding: 10px;
-      margin: 10px 0;
+      padding: 8px;
+      margin: 8px 0;
       border-radius: 5px;
       border: none;
       font-size: 1em;
-      width: 80%;
+      width: 90%;
     }
     button {
-      padding: 10px 20px;
+      padding: 8px 15px;
       background-color: red;
       color: white;
       border: none;
@@ -55,7 +56,7 @@
       cursor: not-allowed;
     }
     #priceDisplay {
-      margin-top: 15px;
+      margin-top: 10px;
       font-weight: bold;
     }
   </style>
@@ -95,13 +96,14 @@
     const MINT_COST = ethers.utils.parseUnits("10", 18); // 10 ONLY
 
     const NFT_ABI = [
-      "function mintNFT(string memory tokenURI) public",
+      "function mintNFT(string memory tokenURI) public payable",
       "function getRequiredOnlyCoinAmount() public view returns (uint256)"
     ];
 
     const ONLY_ABI = [
       "function approve(address spender, uint256 amount) public returns (bool)",
-      "function allowance(address owner, address spender) public view returns (uint256)"
+      "function allowance(address owner, address spender) public view returns (uint256)",
+      "function balanceOf(address account) public view returns (uint256)"
     ];
 
     let provider, signer, nftContract, onlyToken;
@@ -158,36 +160,40 @@
             connectBtn.innerText = `Connected: ${addr.slice(0, 6)}...${addr.slice(-4)}`;
             connectBtn.disabled = true;
           } catch (err) {
-            alert("Connection failed");
+            alert("Connection failed: " + err.message);
             console.error(err);
           }
         } else {
-          alert("MetaMask not detected");
+          alert("MetaMask not detected. Please install it!");
         }
       });
 
       mintBtn.addEventListener("click", async () => {
         const uri = uriInput.value;
-        if (!uri) return alert("Token URI missing");
+        if (!uri) return alert("Please select an NFT to mint!");
 
         try {
           const userAddress = await signer.getAddress();
-          const allowance = await onlyToken.allowance(userAddress, CONTRACT_ADDRESS);
+          const balance = await onlyToken.balanceOf(userAddress);
+          if (balance.lt(MINT_COST)) {
+            return alert("Insufficient OnlyCoin balance. You need at least 10 ONLY!");
+          }
 
+          const allowance = await onlyToken.allowance(userAddress, CONTRACT_ADDRESS);
           if (allowance.lt(MINT_COST)) {
             const approvalTx = await onlyToken.approve(CONTRACT_ADDRESS, MINT_COST);
             await approvalTx.wait();
-            console.log("Approved ONLY for minting.");
+            console.log("Approved 10 ONLY for minting. Tx hash:", approvalTx.hash);
           }
 
-          console.log("Minting:", uri);
-          const tx = await nftContract.mintNFT(uri);
-          console.log("Tx hash:", tx.hash);
+          console.log("Minting NFT with URI:", uri);
+          const tx = await nftContract.mintNFT(uri, { value: MINT_COST }); // Send 10 ONLY with mint
+          console.log("Minting Tx hash:", tx.hash);
           await tx.wait();
-          alert("✅ NFT Minted Successfully!");
+          alert("✅ NFT Minted Successfully! Tx hash: " + tx.hash);
         } catch (err) {
           console.error("Minting failed:", err);
-          alert("Minting failed: " + (err?.data?.message || err?.message || "Unknown error"));
+          alert("Minting failed: " + (err.reason || err.message || "Unknown error. Check console for details."));
         }
       });
     });
