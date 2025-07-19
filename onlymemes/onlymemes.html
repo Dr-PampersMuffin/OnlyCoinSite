@@ -5,60 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OnlyMemes NFT Minting</title>
   <style>
-    body {
-      background-color: #0d0d0d;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    h1 {
-      color: red;
-      text-shadow: 0 0 10px red;
-    }
-    .mint-box {
-      background-color: #1a1a1a;
-      padding: 15px;
-      border-radius: 12px;
-      display: inline-block;
-      margin-top: 20px;
-      box-shadow: 0 0 15px red;
-      max-width: 90%;
-    }
-    .preview-container {
-      margin-top: 15px;
-    }
-    .nft-image {
-      max-width: 200px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px red;
-      margin-top: 10px;
-    }
-    select, input {
-      padding: 8px;
-      margin: 8px 0;
-      border-radius: 5px;
-      border: none;
-      font-size: 1em;
-      width: 90%;
-    }
-    button {
-      padding: 8px 15px;
-      background-color: red;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    button:disabled {
-      background-color: gray;
-      cursor: not-allowed;
-    }
-    #priceDisplay {
-      margin-top: 10px;
-      font-weight: bold;
-    }
+    body { background-color: #0d0d0d; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    h1 { color: red; text-shadow: 0 0 10px red; }
+    .mint-box { background-color: #1a1a1a; padding: 15px; border-radius: 12px; display: inline-block; margin-top: 20px; box-shadow: 0 0 15px red; max-width: 90%; }
+    .preview-container { margin-top: 15px; }
+    .nft-image { max-width: 200px; border-radius: 10px; box-shadow: 0 0 10px red; margin-top: 10px; }
+    select, input { padding: 8px; margin: 8px 0; border-radius: 5px; border: none; font-size: 1em; width: 90%; }
+    button { padding: 8px 15px; background-color: red; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; }
+    button:disabled { background-color: gray; cursor: not-allowed; }
+    #priceDisplay { margin-top: 10px; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -91,13 +46,13 @@
   <script type="module">
     import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.esm.min.js";
 
-    const CONTRACT_ADDRESS = "0xc8552865ddB859e67C0317D5e8AfbAc17335d30B";
+    const CONTRACT_ADDRESS = "0x89c2E429361089FD86fF4f96001c5Bb53E364695"; // Replace with deployed address
     const ONLY_ADDRESS = "0xC0912c990fe376Bc74776b79BAf28456dAdDC055"; // OnlyCoin address
-    const USD_COST = 10; // 10 USD target
 
     const NFT_ABI = [
-      "function mintNFT(string memory tokenURI) public payable",
-      "function getRequiredOnlyCoinAmount() public view returns (uint256)"
+      "function mint(string memory _uri) public",
+      "function getMintCost() public view returns (uint256)",
+      "function tokenURI(uint256 tokenId) public view returns (string memory)"
     ];
 
     const ONLY_ABI = [
@@ -106,7 +61,7 @@
       "function balanceOf(address account) public view returns (uint256)"
     ];
 
-    let provider, signer, nftContract, onlyToken, onlyPrice = 0;
+    let provider, signer, nftContract, onlyToken;
 
     const connectBtn = document.getElementById("connectWallet");
     const mintBtn = document.getElementById("mintBtn");
@@ -133,24 +88,20 @@
       uriInput.value = baseTokenUri + jsonUris[i];
     });
 
-    async function fetchOnlyPrice() {
+    async function fetchMintCost() {
       try {
-        const res = await fetch("https://api.dexscreener.com/latest/dex/pairs/bsc/0x342b34b131faf8846157365a31d144f8dc7d291a");
-        const data = await res.json();
-        onlyPrice = parseFloat(data.pair.priceUsd) || 1; // Default to 1 if fetch fails
-        const requiredAmount = (USD_COST / onlyPrice).toFixed(6);
-        const mintCost = ethers.utils.parseUnits(requiredAmount, 18);
-        priceDisplay.innerText = `Current ONLY price: $${onlyPrice.toFixed(6)} USD | Mint Cost: ${requiredAmount} ONLY (~$${USD_COST})`;
-        return mintCost;
+        const cost = await nftContract.getMintCost();
+        priceDisplay.innerText = `Mint Cost: ${ethers.utils.formatUnits(cost, 18)} ONLY (~$10 USD)`;
+        return cost;
       } catch (e) {
-        priceDisplay.innerText = "Unable to fetch ONLY price. Using default: $1. Mint Cost: 10 ONLY.";
-        console.error("DEXScreener fetch error:", e);
-        return ethers.utils.parseUnits("10", 18); // Fallback to 10 OCT if price fetch fails
+        priceDisplay.innerText = "Unable to fetch mint cost.";
+        console.error("Mint cost fetch error:", e);
+        return ethers.utils.parseUnits("10", 18); // Fallback
       }
     }
 
     window.addEventListener("DOMContentLoaded", async () => {
-      const mintCost = await fetchOnlyPrice();
+      fetchMintCost();
 
       connectBtn.addEventListener("click", async () => {
         if (window.ethereum) {
@@ -178,28 +129,26 @@
 
         try {
           const userAddress = await signer.getAddress();
+          const mintCost = await fetchMintCost();
           const balance = await onlyToken.balanceOf(userAddress);
-          const mintCost = await fetchOnlyPrice(); // Recalculate for accuracy
           if (balance.lt(mintCost)) {
-            const requiredUSD = ethers.utils.formatUnits(mintCost.mul(onlyPrice).div(ethers.utils.parseUnits("1", 18)), 18);
-            return alert(`Insufficient OnlyCoin balance. You need at least ${ethers.utils.formatUnits(mintCost, 18)} ONLY (~$${requiredUSD.toFixed(2)} USD)!`);
+            return alert(`Insufficient OnlyCoin balance. Need ${ethers.utils.formatUnits(mintCost, 18)} ONLY!`);
           }
 
           const allowance = await onlyToken.allowance(userAddress, CONTRACT_ADDRESS);
           if (allowance.lt(mintCost)) {
             const approvalTx = await onlyToken.approve(CONTRACT_ADDRESS, mintCost);
             await approvalTx.wait();
-            console.log("Approved ONLY for minting. Tx hash:", approvalTx.hash);
+            console.log("Approved ONLY. Tx hash:", approvalTx.hash);
           }
 
-          console.log("Minting NFT with URI:", uri, "Cost:", ethers.utils.formatUnits(mintCost, 18), "ONLY");
-          const tx = await nftContract.mintNFT(uri, { value: mintCost }); // Send dynamic OCT amount
+          const tx = await nftContract.mint(uri);
           console.log("Minting Tx hash:", tx.hash);
           await tx.wait();
-          alert("✅ NFT Minted Successfully! Tx hash: " + tx.hash);
+          alert(`✅ NFT Minted Successfully! Tx hash: ${tx.hash}`);
         } catch (err) {
           console.error("Minting failed:", err);
-          alert("Minting failed: " + (err.reason || err.message || "Unknown error. Check console for details."));
+          alert("Minting failed: " + (err.reason || err.message || "Unknown error. Check console."));
         }
       });
     });
