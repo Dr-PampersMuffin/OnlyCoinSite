@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OnlyMemes NFT Minting</title>
+  <title>OnlyMemes NFT Mint</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <style>
-    body { background-color: #0d0d0d; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    body { background: #0d0d0d; color: white; font-family: Arial; text-align: center; padding: 30px; }
     h1 { color: red; text-shadow: 0 0 10px red; }
-    .mint-box { background-color: #1a1a1a; padding: 15px; border-radius: 12px; display: inline-block; margin-top: 20px; box-shadow: 0 0 15px red; max-width: 90%; }
-    .preview-container { margin-top: 15px; }
-    .nft-image { max-width: 200px; border-radius: 10px; box-shadow: 0 0 10px red; margin-top: 10px; }
-    select, input { padding: 8px; margin: 8px 0; border-radius: 5px; border: none; font-size: 1em; width: 90%; }
-    button { padding: 8px 15px; background-color: red; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; }
-    button:disabled { background-color: gray; cursor: not-allowed; }
-    #priceDisplay { margin-top: 10px; font-weight: bold; color: #00ffcc; }
+    .mint-box { background: #1a1a1a; padding: 20px; border-radius: 12px; box-shadow: 0 0 15px red; display: inline-block; margin-top: 20px; }
+    img { max-width: 200px; margin-top: 15px; box-shadow: 0 0 10px red; border-radius: 8px; }
+    select, input, button { padding: 10px; margin-top: 10px; font-size: 1em; border-radius: 6px; border: none; width: 90%; }
+    button { background-color: red; color: white; cursor: pointer; }
+    button:disabled { background-color: #555; cursor: not-allowed; }
   </style>
 </head>
 <body>
-  <h1>OnlyMemes NFT Minting</h1>
+
+  <h1>OnlyMemes NFT Mint</h1>
   <div class="mint-box">
-    <button id="connectWallet">Connect Wallet</button><br>
-    <label for="nftSelector">Select NFT:</label><br>
+    <button id="connectWallet">Connect Wallet</button><br><br>
+
+    <label>Select NFT:</label>
     <select id="nftSelector">
       <option value="0">OnlyMeme #1</option>
       <option value="1">OnlyMeme #2</option>
@@ -33,16 +34,115 @@
       <option value="8">OnlyMeme #9</option>
     </select>
 
-    <div class="preview-container">
-      <img id="nftPreview" class="nft-image" src="https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/onlymemes1.png" alt="NFT Preview" />
-    </div>
-
-    <div id="priceDisplay">Fetching ONLY price...</div>
-
-    <input id="tokenURI" type="text" placeholder="Token URI will auto-fill" readonly><br>
+    <img id="nftPreview" src="" alt="NFT Preview" />
+    <input type="text" id="tokenURI" placeholder="Token URI will auto-fill" readonly>
+    <div id="priceDisplay">Fetching mint cost...</div>
     <button id="mintBtn">Mint NFT</button>
   </div>
 
-  <script type="module" src="./script.js"></script>
+  <script>
+    const CONTRACT_ADDRESS = "0x89c2E429361089FD86fF4f96001c5Bb53E364695";
+    const ONLY_ADDRESS = "0xC0912c990fe376Bc74776b79BAf28456dAdDC055";
+
+    const NFT_ABI = [
+      "function mint(string memory _uri) public",
+      "function getMintCost() public view returns (uint256)"
+    ];
+
+    const ONLY_ABI = [
+      "function approve(address spender, uint256 amount) public returns (bool)",
+      "function allowance(address owner, address spender) public view returns (uint256)",
+      "function balanceOf(address account) public view returns (uint256)"
+    ];
+
+    const baseUri = "https://ipfs.io/ipfs/bafybeici2ujb76hiqg6ssneiwh465iq45sz45leph57unlrqe6es2h66ke/";
+    const imageUris = [
+      "onlymemes1.png", "onlymemes2.png", "onlymemes3.png",
+      "onlymemes4.png", "onlymemes5.png", "onlymemes6.png",
+      "onlymemes7.png", "onlymemes8.png", "onlymemes9.png"
+    ];
+    const jsonUris = [
+      "onlymeme1.json", "onlymeme2.json", "onlymeme3.json",
+      "onlymeme4.json", "onlymeme5.json", "onlymeme6.json",
+      "onlymeme7.json", "onlymeme8.json", "onlymeme9.json"
+    ];
+
+    let provider, signer, nftContract, onlyToken;
+
+    const connectBtn = document.getElementById("connectWallet");
+    const mintBtn = document.getElementById("mintBtn");
+    const selector = document.getElementById("nftSelector");
+    const preview = document.getElementById("nftPreview");
+    const uriInput = document.getElementById("tokenURI");
+    const priceDisplay = document.getElementById("priceDisplay");
+
+    selector.addEventListener("change", () => {
+      const i = parseInt(selector.value);
+      preview.src = baseUri + imageUris[i];
+      uriInput.value = baseUri + jsonUris[i];
+    });
+
+    connectBtn.addEventListener("click", async () => {
+      if (!window.ethereum) return alert("🦊 Please install MetaMask.");
+
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      signer = provider.getSigner();
+      const userAddr = await signer.getAddress();
+
+      connectBtn.textContent = `Connected: ${userAddr.slice(0, 6)}...${userAddr.slice(-4)}`;
+      connectBtn.disabled = true;
+
+      nftContract = new ethers.Contract(CONTRACT_ADDRESS, NFT_ABI, signer);
+      onlyToken = new ethers.Contract(ONLY_ADDRESS, ONLY_ABI, signer);
+
+      fetchMintCost();
+    });
+
+    async function fetchMintCost() {
+      try {
+        const cost = await nftContract.getMintCost();
+        priceDisplay.textContent = `Mint Cost: ${ethers.utils.formatUnits(cost, 18)} ONLY (~$10)`;
+        return cost;
+      } catch (err) {
+        console.error("Mint cost error:", err);
+        priceDisplay.textContent = "❌ Error fetching price";
+        return ethers.utils.parseUnits("10", 18);
+      }
+    }
+
+    mintBtn.addEventListener("click", async () => {
+      const uri = uriInput.value;
+      if (!uri) return alert("Please select an NFT.");
+
+      const userAddr = await signer.getAddress();
+      const cost = await fetchMintCost();
+      const balance = await onlyToken.balanceOf(userAddr);
+
+      if (balance.lt(cost)) {
+        return alert("Insufficient OnlyCoin to mint.");
+      }
+
+      const allowance = await onlyToken.allowance(userAddr, CONTRACT_ADDRESS);
+      if (allowance.lt(cost)) {
+        const approvalTx = await onlyToken.approve(CONTRACT_ADDRESS, cost);
+        await approvalTx.wait();
+        console.log("ONLY approved");
+      }
+
+      try {
+        const tx = await nftContract.mint(uri);
+        console.log("Mint tx:", tx.hash);
+        await tx.wait();
+        alert("🎉 NFT Minted Successfully!");
+      } catch (err) {
+        console.error("Mint failed:", err);
+        alert("Mint failed: " + (err.message || "Unknown error"));
+      }
+    });
+
+    // Auto-trigger initial preview
+    selector.dispatchEvent(new Event("change"));
+  </script>
 </body>
 </html>
