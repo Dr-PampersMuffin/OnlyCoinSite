@@ -374,7 +374,7 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log("✅ OnlyCoin approved:", mintCost.toString());
 
       // Actually mint the NFT
-      const tx = await contract.mint(uriInput);
+      const tx = await nftContract.mint(uri);
       console.log("🚀 Mint transaction hash:", tx.hash);
       await tx.wait();
 
