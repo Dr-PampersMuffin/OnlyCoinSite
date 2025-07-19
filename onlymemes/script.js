@@ -369,7 +369,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const tx = await contract.mintNFT(uri);
+      const tx = await contract.mint(uri); ✅;
       console.log("🚀 Transaction sent:", tx.hash);
       await tx.wait();
       alert("🎉 NFT Minted Successfully!");
