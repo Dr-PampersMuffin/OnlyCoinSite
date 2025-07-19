@@ -305,17 +305,15 @@ const ABI = [
 	}
 ];
 
-let provider;
-let signer;
-let contract;
+let provider, signer, contract;
 
 window.addEventListener("DOMContentLoaded", () => {
   const connectBtn = document.getElementById("connectWallet");
   const mintBtn = document.getElementById("mintBtn");
+  const priceDisplay = document.getElementById("priceDisplay");
 
-  // Check MetaMask availability
   if (!window.ethereum) {
-    alert("🦊 MetaMask not detected. Please install it to connect your wallet.");
+    alert("🦊 MetaMask not detected. Please install it.");
     connectBtn.disabled = true;
     mintBtn.disabled = true;
     return;
@@ -325,57 +323,65 @@ window.addEventListener("DOMContentLoaded", () => {
 
   connectBtn.addEventListener("click", async () => {
     try {
-      // Request account access
       await provider.send("eth_requestAccounts", []);
       signer = provider.getSigner();
       contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-
       const address = await signer.getAddress();
-      connectBtn.textContent = `Connected: ${address.slice(0, 6)}...${address.slice(-4)}`;
+
+      connectBtn.textContent = `Connected: ${address.slice(0,6)}...${address.slice(-4)}`;
       connectBtn.disabled = true;
-      const amountNeeded = await contract.getRequiredOnlyCoinAmount();
-      priceDisplay.innerText = `Minting costs ~${ethers.utils.formatUnits(amountNeeded, 18)} ONLY (~$10)`;
 
-      console.log("✅ Wallet connected:", address);
+      const amountNeeded = await contract.getMintCost();
+      priceDisplay.textContent = `Mint costs: ${ethers.utils.formatUnits(amountNeeded, 18)} ONLY (~$10)`;
 
-      // Optional: Check network and suggest switching
       const network = await provider.getNetwork();
-      if (network.chainId !== 1) {
+      if (network.chainId !== 56) {
         try {
-          await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]); // Ethereum Mainnet
+          await provider.send("wallet_switchEthereumChain", [{ chainId: "0x38" }]);
         } catch (switchError) {
-          console.warn("⚠️ Network switch declined or failed");
+          console.warn("⚠️ Could not switch network");
         }
       }
 
+      console.log("✅ Wallet connected:", address);
     } catch (err) {
-      console.error("❌ Wallet connection failed:", err);
-      alert("Failed to connect wallet. Check console for details.");
+      console.error("❌ Connection failed:", err);
+      alert("Failed to connect wallet. See console.");
     }
   });
 
   mintBtn.addEventListener("click", async () => {
-    const tokenInput = document.getElementById("tokenURI");
-    const uri = tokenInput.value.trim();
+    const uriInput = document.getElementById("tokenURI").value.trim();
 
-    if (!uri) {
-      alert("📸 Please enter a valid token URI.");
+    if (!uriInput) {
+      alert("📸 Please enter a valid Token URI.");
       return;
     }
-
     if (!contract) {
-      alert("🔌 Connect your wallet before minting.");
+      alert("🔌 Connect your wallet first.");
       return;
     }
 
     try {
-      const tx = await contract.mint(uri); ✅;
-      console.log("🚀 Transaction sent:", tx.hash);
+      // Approve OnlyCoin token spend
+      const onlyCoinAddr = await contract.onlyCoinAddress();
+      const onlyCoin = new ethers.Contract(onlyCoinAddr, [
+        "function approve(address, uint256) public returns (bool)"
+      ], signer);
+
+      const mintCost = await contract.getMintCost();
+      await onlyCoin.approve(CONTRACT_ADDRESS, mintCost);
+      console.log("✅ OnlyCoin approved:", mintCost.toString());
+
+      // Actually mint the NFT
+      const tx = await contract.mint(uriInput);
+      console.log("🚀 Mint transaction hash:", tx.hash);
       await tx.wait();
-      alert("🎉 NFT Minted Successfully!");
+
+      alert("🎉 NFT minted successfully!");
     } catch (err) {
-      console.error("💥 Minting failed:", err);
-      alert("Minting failed. See console for more info.");
+      console.error("💥 Minting error:", err);
+      alert("Minting failed. Please check console.");
     }
   });
 });
