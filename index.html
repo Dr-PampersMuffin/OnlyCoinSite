@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="style.css">
-<meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>OnlyCoin | Official Website</title>
- <link rel="icon" href="logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyCoin | Official Website</title>
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
     <style>
         #splash {
             position: fixed;
@@ -29,6 +29,69 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        #news-ticker {
+            width: 100%;
+            overflow: hidden;
+            background: #111;
+            color: #ff4d4d;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        #news-ticker p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        nav {
+            background: #000;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        nav a {
+            color: #ffff99;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        h2 {
+            color: #ff4d4d;
+        }
+        iframe {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: #000;
+        }
+        footer a img {
+            width: 32px;
+            height: 32px;
+        }
+        @media (max-width: 600px) {
+            #splash h1 { font-size: 40px; }
+            nav a { font-size: 14px; margin: 0 5px; }
+            section { margin: 20px auto; padding: 10px; }
+            iframe { height: 300px; }
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -36,254 +99,199 @@
                 document.getElementById("splash").style.display = "none";
             }, 2000);
         });
+
+        function getMobileOperatingSystem() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            if (/android/i.test(userAgent)) return "Android";
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
+            return "unknown";
+        }
+
+        function handleBuyClick() {
+            const os = getMobileOperatingSystem();
+            const buyUrl = "onlyswap/onlyswap.html";
+            if (os === "Android") {
+                window.location.href = `intent://metamask.app.link/${buyUrl}#Intent;scheme=https;package=io.metamask;end`;
+            } else if (os === "iOS") {
+                window.location.href = `https://metamask.app.link/${buyUrl}`;
+            } else {
+                window.location.href = buyUrl; // Fallback to web for desktop
+            }
+        }
     </script>
 </head>
-<body style="font-family:Arial,sans-serif;margin:0;padding:0;background-color:#000;color:#333;">
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000; color: #333;">
     <div id="splash">
         <h1>Welcome to OnlyCoin</h1>
         <p>Loading the future of memecoins...</p>
     </div>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<header>
-  <img src="images/onlybanner-red.png" alt="OnlyCoin Banner" style="width:100%; height:auto; display:block; margin:0 auto;"/>
-</header>
-    
-<link href="style.css" rel="stylesheet"/>
-<style>
-   #news-ticker {
-      width: 100%;
-      overflow: hidden;
-      background: #111;
-      color: #ff4d4d;
-      white-space: nowrap;
-      box-sizing: border-box;
-    }
-    #news-ticker p {
-      display: inline-block;
-      padding-left: 100%;
-      animation: ticker 30s linear infinite;
-    }
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-  </style>
-</head>
-<body>
-</header>
-<nav class="nav-animated" style="background: #000; padding: 10px;">
-<a href="#about" style="color: #ffff99; margin: 0 30px; text-decoration: none; font-weight: bold;color: #ffff99;">
-    About
-   </a>
-<a href="#tokenomics" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Tokenomics</a>
-<a href="#team" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">
-    Team
-   </a>
-<a href="#roadmap" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">
-    Roadmap
-   </a>
-<a href="#market" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">
-    Market
-   </a>
-<a href="#whitepaper" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">
-    Whitepaper
-   </a>
-<a href="onlyswap/onlyswap.html" target="_blank" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank">
-    Buy
-   </a>
-<a href="onlymemes/onlymemes.html" target="_blank" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank"> 
-    OnlyMemes
-   </a>
- <a href="onlykombat/onlykombat.html" target="_blank" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank"> 
-    OnlyKombat
-  </a>
-</nav>
-<main>
-<section id="about" style="max-width: 800px; margin: 50px auto; text-align: center; padding: 20px; color: white;">
-  <h2 style="color: #ff4d4d;">About</h2>
-  <p>
-    OnlyCoin is a next-generation, cross-chain digital asset purpose-built for high-throughput decentralized ecosystems.
-    Drawing strategic architecture from Ethereum’s composability, Solana’s performance optimizations, BNB Chain’s scalability,
-    USDT’s real-world utility anchoring, and XRP’s transaction finality, OnlyCoin represents a hybridized tokenomic and
-    infrastructure model engineered for speed, security, and sustainability.
-  </p>
-  <p>
-    OnlyCoin introduces multi-layered liquidity orchestration, allowing dynamic liquidity provisioning across automated market makers (AMMs),
-    cross-chain bridges, and decentralized aggregators. This enables seamless interoperability between BNB Smart Chain, Ethereum L2s,
-    and future EVM-compatible networks. Wrapped variants (wONLY) ensure protocol-level fluidity across DeFi platforms.
-  </p>
-  <p>
-    Gas-efficient contract architecture minimizes execution overhead while preserving auditability. Inspired by XRP’s transaction logic,
-    confirmation finality is achieved within 3 seconds. Tokenomics adopt a dynamic deflationary model, incorporating a burn structure
-    tied to trade volume activity on PancakeSwap.
-  </p>
-  <p>
-    OnlyCoin also pioneers a Creator Vault Protocol, enabling verified creators to stake tokens and earn royalty streams via
-    smart contract-based dividends — merging NFT utility with recurring income mechanisms. This innovative token is more than
-    just another altcoin — it's a movement empowering digital ownership and financial autonomy.
-  </p>
-  <p>
-    OnlyCoin is a decentralized meme-powered token designed to celebrate online creators and bring utility and entertainment
-    to the crypto world. Launched with the goal of parodying platforms like OnlyFans while introducing real decentralized
-    financial tools, OnlyCoin empowers the community to participate, trade, and contribute to a cultural shift in Web3.
-    The project is proudly built and led by a solo creator: “Dr. PampersMuffin”.
-  </p>
-</section>
-<section id="tokenomics" style="text-align: center; padding: 40px 20px; color: white;">
-  <h2 style="color: #ff4d4d;">Tokenomics</h2>
-  <p style="font-size: 18px; max-width: 800px; margin: 0 auto;">
-    <strong>Total Supply:</strong> 21,000,000 &nbsp; | &nbsp;
-    <strong>Liquidity:</strong> 50% &nbsp; | &nbsp;
-    <strong>Team:</strong> 15% &nbsp; | &nbsp;
-    <strong>Marketing:</strong> 10% &nbsp; | &nbsp;
-    <strong>Staking:</strong> 5% &nbsp; | &nbsp;
-    <strong>Burn Reserve:</strong> 20%
-  </p>
-</section>
+    <header>
+        <img src="images/onlybanner-red.png" alt="OnlyCoin Banner" style="width: 100%; height: auto; display: block; margin: 0 auto;">
+    </header>
+    <nav class="nav-animated">
+        <a href="#about">About</a>
+        <a href="#tokenomics">Tokenomics</a>
+        <a href="#team">Team</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#market">Market</a>
+        <a href="#whitepaper">Whitepaper</a>
+        <a href="#" onclick="handleBuyClick(); return false;">Buy</a>
+        <a href="onlymemes/onlymemes.html" target="_blank">OnlyMemes</a>
+        <a href="onlykombat/onlykombat.html" target="_blank">OnlyKombat</a>
+    </nav>
+    <main>
+        <section id="about">
+            <h2>About</h2>
+            <p>
+                OnlyCoin is a next-generation, cross-chain digital asset purpose-built for high-throughput decentralized ecosystems.
+                Drawing strategic architecture from Ethereum’s composability, Solana’s performance optimizations, BNB Chain’s scalability,
+                USDT’s real-world utility anchoring, and XRP’s transaction finality, OnlyCoin represents a hybridized tokenomic and
+                infrastructure model engineered for speed, security, and sustainability.
+            </p>
+            <p>
+                OnlyCoin introduces multi-layered liquidity orchestration, allowing dynamic liquidity provisioning across automated market makers (AMMs),
+                cross-chain bridges, and decentralized aggregators. This enables seamless interoperability between BNB Smart Chain, Ethereum L2s,
+                and future EVM-compatible networks. Wrapped variants (wONLY) ensure protocol-level fluidity across DeFi platforms.
+            </p>
+            <p>
+                Gas-efficient contract architecture minimizes execution overhead while preserving auditability. Inspired by XRP’s transaction logic,
+                confirmation finality is achieved within 3 seconds. Tokenomics adopt a dynamic deflationary model, incorporating a burn structure
+                tied to trade volume activity on PancakeSwap.
+            </p>
+            <p>
+                OnlyCoin also pioneers a Creator Vault Protocol, enabling verified creators to stake tokens and earn royalty streams via
+                smart contract-based dividends — merging NFT utility with recurring income mechanisms. This innovative token is more than
+                just another altcoin — it's a movement empowering digital ownership and financial autonomy.
+            </p>
+            <p>
+                OnlyCoin is a decentralized meme-powered token designed to celebrate online creators and bring utility and entertainment
+                to the crypto world. Launched with the goal of parodying platforms like OnlyFans while introducing real decentralized
+                financial tools, OnlyCoin empowers the community to participate, trade, and contribute to a cultural shift in Web3.
+                The project is proudly built and led by a solo creator: “Dr. PampersMuffin”.
+            </p>
+        </section>
+        <section id="tokenomics">
+            <h2>Tokenomics</h2>
+            <p style="font-size: 18px; max-width: 800px; margin: 0 auto;">
+                <strong>Total Supply:</strong> 21,000,000 &nbsp;|&nbsp;
+                <strong>Liquidity:</strong> 50% &nbsp;|&nbsp;
+                <strong>Team:</strong> 15% &nbsp;|&nbsp;
+                <strong>Marketing:</strong> 10% &nbsp;|&nbsp;
+                <strong>Staking:</strong> 5% &nbsp;|&nbsp;
+                <strong>Burn Reserve:</strong> 20%
+            </p>
+        </section>
+        <section id="team">
+            <h2>Team</h2>
+            <img src="images/Zak Jones.png" alt="Zak Jones - Founder" style="width: 140px; height: 140px; border-radius: 50%; box-shadow: 0 0 8px #ff4d4d; margin-bottom: 15px;">
+            <h3>Zak Jones</h3>
+            <p><strong>Dr. PampersMuffin – Founder & Strategist</strong></p>
+            <p>
+                Visionary behind OnlyCoin, blending DeFi accessibility with influencer-driven crypto culture. He is the solo creator behind OnlyCoin.
+                A dedicated crypto enthusiast, builder, and marketer, he has envisioned and developed OnlyCoin from the ground up — with a passion
+                for innovation and a flair for fun. Everything you see is a product of hard work, not corporate hype.
+            </p>
+            <p><strong>Bio: Founder of OnlyCoin</strong></p>
+            <p>
+                What started as a tongue-in-cheek pun on OnlyFans quickly evolved into a full-fledged crypto movement. With a nod to internet culture
+                and a love for bold ideas, I created OnlyCoin to bring fun, accessibility, and creativity to the blockchain. This isn’t just a meme —
+                it’s a mission. No team, no noise — just me, my laptop, and a vision.
+            </p>
+            <p>Built with ❤️ by a passionate solo dev.</p>
+            <div style="margin-top: 20px;">
+                <a href="https://github.com/Dr-PampersMuffin" target="_blank" style="color: #ff4d4d; margin: 0 15px;">GitHub</a>
+                <a href="https://instagram.com/" target="_blank" style="color: #ff4d4d; margin: 0 15px;">Instagram</a>
+            </div>
+        </section>
+        <section id="roadmap">
+            <h2>Roadmap</h2>
+            <ul style="list-style: none; padding: 0; font-size: 18px;">
+                <li style="margin-bottom: 10px;"><strong>Q2 2025</strong> – Launch & Lock</li>
+                <li style="margin-bottom: 10px;"><strong>Q3 2025</strong> – Listings & PR</li>
+                <li style="margin-bottom: 10px;"><strong>Q4 2025</strong> – DAO & Staking</li>
+            </ul>
+        </section>
+        <section id="market">
+            <h2>Market</h2>
+            <iframe 
+                src="https://www.geckoterminal.com/bsc/pools/0x342b34b131faf8846157365a31d144f8dc7d291a?embed=1" 
+                width="100%" 
+                height="500" 
+                style="border: 0; margin: 0; padding: 0;" 
+                allowfullscreen
+            ></iframe>
+            <h2 style="margin-top: 40px;">Top 10 Cryptos</h2>
+            <div style="display: flex; justify-content: center; margin: 20px 0;">
+                <iframe
+                    frameborder="0"
+                    width="90%"
+                    height="500"
+                    src="https://s.tradingview.com/embed-widget/market-quotes/?locale=en#%7B%22symbolsGroups%22%3A%5B%7B%22name%22%3A%22Crypto%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22BINANCE%3ABTCUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AETHUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AXRPUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ADOGEUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ASOLUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ALTCUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ALINKUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AAVAXUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AMATICUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ABNBUSDT%22%7D%5D%7D%5D%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%7D"
+                ></iframe>
+            </div>
+        </section>
+        <section id="liquidity">
+            <h2>🔒 Liquidity Lock Proof</h2>
+            <p><strong>66.33%</strong> of LP tokens are locked</p>
+            <p><strong>Locked LP Tokens:</strong> 140.7142</p>
+            <p><strong>Total LP Tokens:</strong> 212.1320</p>
+            <p>
+                OnlyCoin liquidity is secured! We've locked <strong>9,043,950 OnlyCoin</strong> and its paired <strong>WBNB</strong>
+                (~66% of LP tokens) until <strong>September 7, 2025</strong>.
+            </p>
+            <a href="https://mudra.website/?certificate=yes&type=0&lp=0x342b34b131faf8846157365a31d144f8dc7d291a" target="_blank" rel="noopener noreferrer">
+                <img src="images/onlycoin-lock.png" alt="OnlyCoin Lock Badge - View Certificate" style="width: 150px; cursor: pointer;">
+            </a>
+            <p>
+                <a href="https://bscscan.com/token/0x342b34b131faf8846157365a31d144f8dc7d291a" target="_blank"
+                   style="color: #ff4d4d; font-weight: bold;">🔗 View LP contract: BscScan LP Tracker</a>
+            </p>
+        </section>
+        <section id="whitepaper">
+            <h2>Whitepaper</h2>
+            <p>You can download the official OnlyCoin Whitepaper below:</p>
+            <p>
+                <a href="OnlyCoin_Whitepaper.pdf" download
+                   style="color: white; text-decoration: underline; font-weight: bold;">
+                    📄 Download the OnlyCoin Whitepaper
+                </a>
+            </p>
+        </section>
+        <section id="crypto-news" style="padding: 20px; background-color: #0f0f0f;">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="color: #ffcc00; font-family: sans-serif;">📰 Live Crypto News</h2>
+                <div id="crypto-news-feed" style="color: white; font-family: sans-serif; line-height: 1.6;">
+                    <p>Loading the latest news...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div style="display: flex; justify-content: center; gap: 20px; padding: 20px;">
+            <a href="https://twitter.com/OnlyCoinToken" target="_blank"><img src="images/twitter.png" width="32"/></a>
+            <a href="https://github.com/Dr-PampersMuffin" target="_blank"><img src="images/github.png" width="32"/></a>
+            <a href="https://t.me/OnlyCoinToken" target="_blank"><img src="images/telegram.png" width="32"/></a>
+            <a href="https://discord.gg/k2w9uyUf" target="_blank"><img src="images/discord.png" width="32"/></a>
+        </div>
+    </footer>
+    <script>
+        async function loadCryptoNews() {
+            try {
+                const response = await fetch('https://newsdata.io/api/1/news?apikey=pub_c10c8901550d464dbc6b72c238afcb28&category=business,technology&language=en&q=crypto');
+                const data = await response.json();
+                let output = "<ul style='list-style: none; padding-left: 0;'>";
+                data.results.slice(0, 6).forEach(news => {
+                    output += `<li style="margin: 10px 0;"><a href="${news.link}" target="_blank" style="color: #00ffff; text-decoration: none;">${news.title}</a></li>`;
+                });
+                output += "</ul>";
+                document.getElementById("crypto-news-feed").innerHTML = output;
+            } catch (error) {
+                document.getElementById("crypto-news-feed").innerHTML = "<p style='color: red;'>Failed to load news.</p>";
+                console.error("News API Error:", error);
+            }
+        }
 
-<section id="team" style="max-width: 800px; margin: 60px auto; text-align: center; padding: 20px; color: white;">
-  <h2 style="color: #ff4d4d;">Team</h2>
-
-  <img src="images/Zak Jones.png" alt="Zak Jones - Founder" style="width: 140px; height: 140px; border-radius: 50%; box-shadow: 0 0 8px #ff4d4d; margin-bottom: 15px;"/>
- 
-  <h3>Zak Jones</h3>
-  <p><strong>Dr. PampersMuffin – Founder & Strategist</strong></p>
-
-  <p>
-    Visionary behind OnlyCoin, blending DeFi accessibility with influencer-driven crypto culture. He is the solo creator behind OnlyCoin.
-    A dedicated crypto enthusiast, builder, and marketer, he has envisioned and developed OnlyCoin from the ground up — with a passion
-    for innovation and a flair for fun. Everything you see is a product of hard work, not corporate hype.
-  </p>
-
-  <p><strong>Bio: Founder of OnlyCoin</strong></p>
-  <p>
-    What started as a tongue-in-cheek pun on OnlyFans quickly evolved into a full-fledged crypto movement. With a nod to internet culture
-    and a love for bold ideas, I created OnlyCoin to bring fun, accessibility, and creativity to the blockchain. This isn’t just a meme —
-    it’s a mission. No team, no noise — just me, my laptop, and a vision.
-  </p>
-
-  <p>Built with ❤️ by a passionate solo dev.</p>
-
-  <div style="margin-top: 20px;">
-    <a href="https://github.com/Dr-PampersMuffin" target="_blank" style="color:#ff4d4d; margin: 0 15px;">GitHub</a>
-    <a href="https://instagram.com/" target="_blank" style="color:#ff4d4d; margin: 0 15px;">Instagram</a>
-  </div>
-</section>
-
-</section>
-<section id="roadmap" style="max-width: 800px; margin: 60px auto; text-align: center; padding: 20px; color: white;">
-  <h2 style="color: #ff4d4d;">Roadmap</h2>
-
-  <ul style="list-style: none; padding: 0; font-size: 18px;">
-    <li style="margin-bottom: 10px;"><strong>Q2 2025</strong> – Launch & Lock</li>
-    <li style="margin-bottom: 10px;"><strong>Q3 2025</strong> – Listings & PR</li>
-    <li style="margin-bottom: 10px;"><strong>Q4 2025</strong> – DAO & Staking</li>
-  </ul>
-</section>
-
-<section id="market">
-<h2 style="color: #ff4d4d; text-align: center;">
-     Market
-    </h2>
-<iframe 
-  src="https://www.geckoterminal.com/bsc/pools/0x342b34b131faf8846157365a31d144f8dc7d291a?embed=1" 
-  width="100%" 
-  height="500" 
-  style="border: 0; margin: 0; padding: 0;" 
-  allowfullscreen
-></iframe>
-    <h2 style="color: #ff4d4d; text-align: center; margin-top: 40px;">
-  Top 10 Cryptos
-</h2>
-
-<div style="display: flex; justify-content: center; margin: 20px 0;">
-  <iframe
-    frameborder="0"
-    width="90%"
-    height="500"
-    src="https://s.tradingview.com/embed-widget/market-quotes/?locale=en#%7B%22symbolsGroups%22%3A%5B%7B%22name%22%3A%22Crypto%22%2C%22symbols%22%3A%5B%7B%22name%22%3A%22BINANCE%3ABTCUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AETHUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AXRPUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ADOGEUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ASOLUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ALTCUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ALINKUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AAVAXUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3AMATICUSDT%22%7D%2C%7B%22name%22%3A%22BINANCE%3ABNBUSDT%22%7D%5D%7D%5D%2C%22colorTheme%22%3A%22dark%22%2C%22isTransparent%22%3Atrue%7D">
-  </iframe>
-</div>
-
-<section id="liquidity" style="max-width: 800px; margin: 60px auto; text-align: center; padding: 20px; color: white;">
-  <h2 style="color: #ff4d4d;">🔒 Liquidity Lock Proof</h2>
-
-  <p><strong>66.33%</strong> of LP tokens are locked</p>
-  <p><strong>Locked LP Tokens:</strong> 140.7142</p>
-  <p><strong>Total LP Tokens:</strong> 212.1320</p>
-
-  <p>
-    OnlyCoin liquidity is secured! We've locked <strong>9,043,950 OnlyCoin</strong> and its paired <strong>WBNB</strong>
-    (~66% of LP tokens) until <strong>September 7, 2025</strong>.
-  </p>
-
-  <a href="https://mudra.website/?certificate=yes&type=0&lp=0x342b34b131faf8846157365a31d144f8dc7d291a" target="_blank" rel="noopener noreferrer">
-  <img src="images/onlycoin-lock.png" alt="OnlyCoin Lock Badge - View Certificate" style="width:150px; cursor:pointer;">
-</a>
-
-  <p>
-    <a href="https://bscscan.com/token/0x342b34b131faf8846157365a31d144f8dc7d291a" target="_blank"
-       style="color: #ff4d4d; font-weight: bold;">🔗 View LP contract: BscScan LP Tracker</a>
-  </p>
-</section>
-
-  <section id="whitepaper" style="text-align: center; padding: 40px 20px; color: white;">
-  <h2 style="color: #ff4d4d;">Whitepaper</h2>
-
-  <p>You can download the official OnlyCoin Whitepaper below:</p>
-
-  <p>
-    <a href="OnlyCoin_Whitepaper.pdf" download
-       style="color: white; text-decoration: underline; font-weight: bold;">
-      📄 Download the OnlyCoin Whitepaper
-    </a>
-  </p>
-     
-  </main>
-</section>
-
-<!-- 🔥 LIVE CRYPTO NEWS SECTION -->
-<section id="crypto-news" style="padding: 20px; background-color: #0f0f0f;">
-  <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-    <h2 style="color: #ffcc00; font-family: sans-serif;">📰 Live Crypto News</h2>
-    <div id="crypto-news-feed" style="color: white; font-family: sans-serif; line-height: 1.6;">
-      <p>Loading the latest news...</p>
-    </div>
-  </div>
-</section>
-
-<script>
-  async function loadCryptoNews() {
-    try {
-      const response = await fetch('https://newsdata.io/api/1/news?apikey=pub_c10c8901550d464dbc6b72c238afcb28&category=business,technology&language=en&q=crypto');
-      const data = await response.json();
-
-      let output = "<ul style='list-style: none; padding-left: 0;'>";
-      data.results.slice(0, 6).forEach(news => {
-        output += `<li style="margin: 10px 0;"><a href="${news.link}" target="_blank" style="color: #00ffff; text-decoration: none;">${news.title}</a></li>`;
-      });
-      output += "</ul>";
-
-      document.getElementById("crypto-news-feed").innerHTML = output;
-    } catch (error) {
-      document.getElementById("crypto-news-feed").innerHTML = "<p style='color: red;'>Failed to load news.</p>";
-      console.error("News API Error:", error);
-    }
-  }
-
-  window.onload = loadCryptoNews;
-</script>
-
-
-
-<footer>
-  <div style="display:flex; justify-content:center; gap:20px; padding:20px;">
-    <a href="https://twitter.com/OnlyCoinToken" target="_blank"><img src="images/twitter.png" width="32"/></a>
-    <a href="https://github.com/Dr-PampersMuffin" target="_blank"><img src="images/github.png" width="32"/></a>
-    <a href="https://t.me/OnlyCoinToken" target="_blank"><img src="images/telegram.png" width="32"/></a>
-    <a href="https://discord.gg/k2w9uyUf" target="_blank"><img src="images/discord.png" width="32"/></a>
-  </div>
-</footer>
+        window.onload = loadCryptoNews;
+    </script>
+</body>
+</html>
