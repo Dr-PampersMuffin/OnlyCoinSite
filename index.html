@@ -93,39 +93,39 @@
             iframe { height: 300px; }
         }
     </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(function() {
-                document.getElementById("splash").style.display = "none";
-            }, 2000);
-        });
+    
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            document.getElementById("splash").style.display = "none";
+        }, 2000);
+    });
 
-        function getMobileOperatingSystem() {
-            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            if (/android/i.test(userAgent)) return "Android";
-            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
-            return "unknown";
-        }
-
-        function handleBuyClick() {
-    const os = getMobileOperatingSystem();
-    const buyUrl = "onlyswap/onlyswap.html"; // adjust path if needed
-
-    const fullBuyUrl = new URL(buyUrl, window.location.origin).href;
-
-    if (os === "iOS") {
-        // iOS requires https deep link directly
-        window.location.href = `https://metamask.app.link/dapp/${fullBuyUrl.replace(/^https?:\/\//, '')}`;
-    } else if (os === "Android") {
-        // Android handles the same URL format
-        window.location.href = `https://metamask.app.link/dapp/${fullBuyUrl.replace(/^https?:\/\//, '')}`;
-    } else {
-        // Desktop fallback
-        window.open(buyUrl, '_blank');
+    function getMobileOperatingSystem() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if (/android/i.test(userAgent)) return "Android";
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
+        return "unknown";
     }
-}
 
-    </script>
+    function handleBuyClick() {
+        const os = getMobileOperatingSystem();
+
+        // Set your full URL to the onlyswap page:
+        const dappUrl = "https://onlycoin.app/onlyswap/onlyswap.html";
+
+        // Format it for MetaMask deep link
+        const deepLink = `https://metamask.app.link/dapp/${dappUrl.replace(/^https?:\/\//, '')}`;
+
+        if (os === "iOS" || os === "Android") {
+            window.location.href = deepLink;
+        } else {
+            // For desktop, just open the page in a new tab
+            window.open(dappUrl, '_blank');
+        }
+    }
+</script>
+
 </head>
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000; color: #333;">
     <div id="splash">
