@@ -117,9 +117,11 @@
     let router;
 
     window.addEventListener("DOMContentLoaded", async () => {
-      if (typeof window.ethereum !== "undefined") {
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        router = new ethers.Contract(ROUTER_ADDRESS, abi, provider);
+      if (typeof window.ethereum !== 'undefined') {
+    // MetaMask is installed
+    const provider = window.ethereum;
+    await provider.request({ method: 'eth_requestAccounts' });
+
 
         document.getElementById("connect-btn").addEventListener("click", async () => {
           try {
