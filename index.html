@@ -108,16 +108,23 @@
         }
 
         function handleBuyClick() {
-            const os = getMobileOperatingSystem();
-            const buyUrl = "onlyswap/onlyswap.html";
-            if (os === "Android") {
-                window.location.href = `intent://metamask.app.link/${buyUrl}#Intent;scheme=https;package=io.metamask;end`;
-            } else if (os === "iOS") {
-                window.location.href = `https://metamask.app.link/${buyUrl}`;
-            } else {
-                window.location.href = buyUrl; // Fallback to web for desktop
-            }
-        }
+    const os = getMobileOperatingSystem();
+    const buyUrl = "onlyswap/onlyswap.html"; // adjust path if needed
+
+    const fullBuyUrl = new URL(buyUrl, window.location.origin).href;
+
+    if (os === "iOS") {
+        // iOS requires https deep link directly
+        window.location.href = `https://metamask.app.link/dapp/${fullBuyUrl.replace(/^https?:\/\//, '')}`;
+    } else if (os === "Android") {
+        // Android handles the same URL format
+        window.location.href = `https://metamask.app.link/dapp/${fullBuyUrl.replace(/^https?:\/\//, '')}`;
+    } else {
+        // Desktop fallback
+        window.open(buyUrl, '_blank');
+    }
+}
+
     </script>
 </head>
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000; color: #333;">
