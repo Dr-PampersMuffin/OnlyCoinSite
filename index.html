@@ -93,39 +93,32 @@
             iframe { height: 300px; }
         }
     </style>
-    
-   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(function() {
-            document.getElementById("splash").style.display = "none";
-        }, 2000);
-    });
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById("splash").style.display = "none";
+            }, 2000);
+        });
 
-    function getMobileOperatingSystem() {
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if (/android/i.test(userAgent)) return "Android";
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
-        return "unknown";
-    }
-
-    function handleBuyClick() {
-        const os = getMobileOperatingSystem();
-
-        // Set your full URL to the onlyswap page:
-        const dappUrl = "https://onlycoin.app/onlyswap/onlyswap.html";
-
-        // Format it for MetaMask deep link
-        const deepLink = `https://metamask.app.link/dapp/${dappUrl.replace(/^https?:\/\//, '')}`;
-
-        if (os === "iOS" || os === "Android") {
-            window.location.href = deepLink;
-        } else {
-            // For desktop, just open the page in a new tab
-            window.open(dappUrl, '_blank');
+        function getMobileOperatingSystem() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            if (/android/i.test(userAgent)) return "Android";
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
+            return "unknown";
         }
-    }
-</script>
 
+        function handleBuyClick() {
+            const os = getMobileOperatingSystem();
+            const buyUrl = "onlyswap/onlyswap.html";
+            if (os === "Android") {
+                window.location.href = `intent://metamask.app.link/${buyUrl}#Intent;scheme=https;package=io.metamask;end`;
+            } else if (os === "iOS") {
+                window.location.href = `https://metamask.app.link/${buyUrl}`;
+            } else {
+                window.location.href = buyUrl; // Fallback to web for desktop
+            }
+        }
+    </script>
 </head>
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000; color: #333;">
     <div id="splash">
@@ -142,7 +135,7 @@
 <a href="#roadmap" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Roadmap</a>
 <a href="#market" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Market</a>
 <a href="#whitepaper" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Whitepaper </a>
-<a href="#" onclick="handleBuyClick()" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;">Buy</a>
+<a href="onlyswap/onlyswap.html" target="_blank" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank">Buy</a>
 <a href="onlymemes/onlymemes.html" target="_blank" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank">  OnlyMemes</a>
  <a href="onlykombat/onlykombat.html" target="_blank" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank"> OnlyKombat</a>
   </nav>
