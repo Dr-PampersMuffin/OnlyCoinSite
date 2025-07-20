@@ -117,10 +117,9 @@
     let router;
 
     window.addEventListener("DOMContentLoaded", async () => {
-      if (typeof window.ethereum !== 'undefined') {
-    // MetaMask is installed
-    const provider = window.ethereum;
-    await provider.request({ method: 'eth_requestAccounts' });
+     if (window.ethereum) {
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+});
 
 
         document.getElementById("connect-btn").addEventListener("click", async () => {
