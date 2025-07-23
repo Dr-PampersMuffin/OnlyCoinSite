@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnlyCoin | Powered by OnlyKombat</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <audio id="bgMusic" autoplay loop>
+    <source src="assets/onlykombat_theme.mp3" type="audio/mpeg">
+  </audio>
+</head>
+<body>
+  <div class="neon-banner">
+    <img src="assets/logo.png" class="logo" alt="OnlyCoin Logo">
+    <h1 class="neon-text">ONLYKOMBAT</h1>
+    <p class="subtitle">Layer-2 Engine | NFT Combat | Retro GameFi</p>
+  </div>
 
+  <nav class="nav-bar">
+    <a href="#about">About</a>
+    <a href="#onlyswap">OnlySwap</a>
+    <a href="#onlymemes">OnlyMemes</a>
+    <a href="#arena">Arena</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="https://app.unicrypt.network/amm/pancake-v2/pair/0x342b34b131faf8846157365a31d144f8dc7d291a">Liquidity Lock</a>
+  </nav>
+
+  <section id="about" class="section dark-bg">
+    <h2>🎮 About OnlyCoin</h2>
+    <p>
+      Founded by Zak “Dr. PampersMuffin” Jones — a retro gamer, pixel art collector, and code strategist — OnlyCoin is not just a meme token.
+      It is the digital fuel behind OnlyKombat: a Layer-2 powered retro fighting world.
+    </p>
+    <p>
+      Our KombatVerse lets you fight, mint, upgrade, and earn. Built on BNB Chain, every NFT fighter, arena, and weapon is powered by $ONLY.
+    </p>
+  </section>
+
+  <section id="onlyswap" class="section red-bg">
+    <h2>🌀 OnlySwap</h2>
+    <p>Trade $ONLY instantly via our decentralized swap engine.</p>
+    <a class="cta-button" href="https://onlycointoken.com/swap" target="_blank">Launch OnlySwap</a>
+  </section>
+
+  <section id="onlymemes" class="section dark-bg">
+    <h2>🖼️ OnlyMemes NFT</h2>
+    <p>Mint pixelated retro NFTs that burn $ONLY — our fuel for Kombat upgrades.</p>
+    <a class="cta-button" href="https://onlycointoken.com/onlymemes" target="_blank">Mint Now</a>
+  </section>
+
+  <section id="arena" class="section arena-bg">
+    <h2>⛩️ Enter the Arena</h2>
+    <p>The OnlyKombat Game is under construction — pixelated warriors, fatal arenas, and on-chain action are coming.</p>
+    <img src="assets/arena_teaser.png" alt="Arena" class="arena-preview">
+    <p><em>Launching soon. Select your fighter. Fight to earn. Progress to conquer.</em></p>
+    <a class="cta-button disabled" aria-disabled="true">Arena Coming Soon</a>
+  </section>
+
+  <section id="roadmap" class="section red-bg">
+    <h2>📜 Roadmap</h2>
+    <ul>
+      <li>✅ Launch $ONLY + Liquidity Lock</li>
+      <li>✅ OnlySwap DEX Activated</li>
+      <li>✅ OnlyMemes NFT Portal</li>
+      <li>🚧 OnlyKombat Beta Testing</li>
+      <li>🧱 L2 Deployment of OnlyChain (gas-efficient + fair)</li>
+      <li>🏛️ Governance DAO + Arena Expansion</li>
+    </ul>
+  </section>
+
+  <footer class="footer">
+    <p>© 2025 OnlyCoinToken.com | Powered by OnlyKombat | Built on BNB</p>
+    <p>
+      <a href="https://t.me/OnlyCoinToken" target="_blank">Telegram</a> |
+      <a href="https://twitter.com/OnlyCoinToken" target="_blank">Twitter</a> |
+      <a href="https://github.com/Dr-PampersMuffin/OnlyCoinSite" target="_blank">GitHub</a>
+    </p>
+  </footer>
+
+  <script>
+    window.addEventListener('load', () => {
+      if (typeof window.ethereum === 'undefined') {
+        alert('⚠️ MetaMask not detected. Please install it to use OnlySwap and OnlyMemes features.');
+      } else {
+        console.log('✅ MetaMask detected. Ready for interaction.');
+      }
+    });
+  </script>
+</body>
+</html>
