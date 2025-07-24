@@ -105,19 +105,20 @@
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
             return "unknown";
         }
+<script>
+    function handleBuyClick() {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const dappURL = "onlycointoken.com/onlyswap/onlyswap.html";
 
-        function handleBuyClick() {
-            const os = getMobileOperatingSystem();
-            const buyUrl = "onlyswap/onlyswap.html";
-            if (os === "Android") {
-                window.location.href = `intent://metamask.app.link/${buyUrl}#Intent;scheme=https;package=io.metamask;end`;
-            } else if (os === "iOS") {
-                window.location.href = `https://metamask.app.link/${buyUrl}`;
-            } else {
-                window.location.href = buyUrl; // Fallback to web for desktop
-            }
+        if (isMobile) {
+            // Deep link to MetaMask in-app browser
+            window.location.href = `https://metamask.app.link/dapp/${dappURL}`;
+        } else {
+            // Desktop fallback
+            window.location.href = "onlyswap/onlyswap.html";
         }
-    </script>
+    }
+</script>
 </head>
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000; color: #333;">
 <div id="splash">
