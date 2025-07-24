@@ -1,6 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OnlyCoin | Official Website</title>
+<link href="/style.css" rel="stylesheet"/>
+<style>
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #splash h1 {
+            font-size: 60px;
+            animation: fadeIn 6s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #news-ticker {
+            width: 100%;
+            overflow: hidden;
+            background: #111;
+            color: #ff4d4d;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+        #news-ticker p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        nav {
+            background: #000;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        nav a {
+            color: #ffff99;
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        h2 {
+            color: #ff4d4d;
+        }
+        iframe {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: #000;
+        }
+        footer a img {
+            width: 32px;
+            height: 32px;
+        }
+        @media (max-width: 600px) {
+            #splash h1 { font-size: 40px; }
+            nav a { font-size: 14px; margin: 0 5px; }
+            section { margin: 20px auto; padding: 10px; }
+            iframe { height: 300px; }
+        }
+    </style>
 <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {
@@ -14,19 +105,18 @@
             if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "iOS";
             return "unknown";
         }
-<script>
-    function handleBuyClick() {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        const dappURL = "onlycointoken.com/onlyswap/onlyswap.html";
 
-        if (isMobile) {
-            // Deep link to MetaMask in-app browser
-            window.location.href = `https://metamask.app.link/dapp/${dappURL}`;
-        } else {
-            // Desktop fallback
-            window.location.href = "onlyswap/onlyswap.html";
+        function handleBuyClick() {
+            const os = getMobileOperatingSystem();
+            const buyUrl = "onlyswap/onlyswap.html";
+            if (os === "Android") {
+                window.location.href = `intent://metamask.app.link/${buyUrl}#Intent;scheme=https;package=io.metamask;end`;
+            } else if (os === "iOS") {
+                window.location.href = `https://metamask.app.link/${buyUrl}`;
+            } else {
+                window.location.href = buyUrl; // Fallback to web for desktop
+            }
         }
-    }
 </script>
 </head>
 <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #000; color: #333;">
@@ -44,12 +134,7 @@
 <a href="#roadmap" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Roadmap</a>
 <a href="#market" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Market</a>
 <a href="#whitepaper" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;">Whitepaper </a>
-<a href="javascript:void(0);" 
-   onclick="handleBuyClick()" 
-   style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;" 
-   target="_blank">
-   Buy
-</a>
+<a href="onlyswap/onlyswap.html" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank">Buy</a>
 <a href="onlymemes/onlymemes.html" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank">  OnlyMemes</a>
 <a href="onlykombat/onlykombat.html" style="color: #ffff99; margin: 0 30px auto; text-decoration: none; font-weight: bold;color: #ffff99;" target="_blank"> OnlyKombat</a>
 </nav>
